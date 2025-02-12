@@ -4,24 +4,17 @@ class User
 {
     private $username;
     private $password;
-    private $cognome;
 
     /**
      * @param $username
      * @param $password
      * @param $cognome
      */
-    public function __construct($username, $password, $cognome)
+    public function __construct($username, $password)
     {
         $this->username = $username;
         $this->password = $password;
-        $this->cognome = $cognome;
     }
-
-
-
-
-
 
     /**
      * @return mixed
@@ -54,23 +47,4 @@ class User
     {
         $this->password = $password;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getCognome()
-    {
-        return $this->cognome;
-    }
-
-    /**
-     * @param mixed $cognome
-     */
-    public function setCognome($cognome)
-    {
-        $this->cognome = $cognome;
-    }
-
-
-
 }

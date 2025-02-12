@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="155b3dc2-68be-4448-88d5-b9a8a6f20cc2" name="Changes" comment="" />
+    <list default="true" id="155b3dc2-68be-4448-88d5-b9a8a6f20cc2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/php_mvc/application/controller/signup.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/php_mvc/application/models/Database.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/php_mvc/application/views/signup/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php_mvc/application/config/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/config/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php_mvc/application/controller/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/controller/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php_mvc/application/controller/nomeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/php_mvc/application/models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php_mvc/application/models/UserMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/models/UserMapper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php_mvc/application/models/users.csv" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +23,9 @@
   </component>
   <component name="ComposerSettings">
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
   <component name="ProjectColorInfo">{
@@ -22,24 +36,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/I3AA/M133/MVC&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/I3AA/M306/DattiloKing/DattiloKing/5_Applicativo/MVC/php_mvc/application/views/signup",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\I3AA\M306\DattiloKing\DattiloKing\5_Applicativo\MVC\php_mvc\application\views\signup" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PS-242.23339.16" />
-        <option value="bundled-php-predefined-a98d8de5180a-90914f2295cb-com.jetbrains.php.sharedIndexes-PS-242.23339.16" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-PS-241.15989.102" />
+        <option value="bundled-php-predefined-ba97393d7c68-c76157a7178b-com.jetbrains.php.sharedIndexes-PS-241.15989.102" />
       </set>
     </attachedChunks>
   </component>
@@ -55,6 +75,7 @@
       <workItem from="1732724741130" duration="955000" />
       <workItem from="1732727171612" duration="3109000" />
       <workItem from="1732742316488" duration="632000" />
+      <workItem from="1739366905028" duration="3078000" />
     </task>
     <servers />
   </component>

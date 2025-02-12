@@ -1,18 +1,28 @@
 <?php
 require_once 'User.php';
 class UserMapper{
-    public function fetchAll(){
-        $lines = array();
-        $file = file(USERS);
 
-        foreach ($file as $key => $value){
-            $lines[$key] = str_getcsv($value,';');
+    private $connection;
+    public function __construct(){
+        require_once 'application/models/Database.php';
+        $this->connection = Database::getConnection();
+    }
+
+    public function signUpManageModel($username,$password){
+        $utenti = $this->connection->prepare('SELECT * from utente');
+        $utenti->execute();
+        foreach ($utenti as $utente) {
+            if($utente['username'] == $username){
+                return false;
+            }
         }
-        $users = array();
-        foreach($lines as $line){
-            $user = new User($line[0],$line[1],$line[2]);
-            $users[] = $user;
-        }
-        return $users;
+
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        $salvataggioUtente = $this->connection->prepare('INSERT INTO utente (username, password) VALUES (?, ?)');
+        $salvataggioUtente->bindParam(1, $username);
+        $salvataggioUtente->bindParam(2, $hashedPassword);
+        $salvataggioUtente->execute();
+        return true;
     }
 }
