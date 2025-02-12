@@ -8,4 +8,8 @@ $final = $actual_link.str_replace($documentRoot, '',$dir);
 
 define('URL',$final);
 
-define('USERS', 'application/models/users.csv');
+define('HOST','localhost');
+define('USERNAME','root');
+define('PASSWORD','');
+define('DATABASE','dattiloking');
+define('PORT','3306');
