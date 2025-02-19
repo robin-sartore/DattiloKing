@@ -70,9 +70,6 @@
                 <button class="nav-link active" id="sign-in-tab" data-bs-toggle="pill" data-bs-target="#sign-in" type="button" role="tab">Sign In</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="guest-tab" data-bs-toggle="pill" data-bs-target="#guest" type="button" role="tab">Guest</button>
-            </li>
-            <li class="nav-item" role="presentation">
                 <button class="nav-link" id="sign-up-tab" data-bs-toggle="pill" data-bs-target="#sign-up" type="button" role="tab">Sign Up</button>
             </li>
         </ul>
@@ -82,7 +79,6 @@
                 <input type="text" class="form-control mb-3" placeholder="Username" name="username">
                 <input type="password" class="form-control mb-3" placeholder="Password" name="password">
                 <input class="btn btn-dark w-100" type="submit" value="SIGN IN">
-                <input class="btn btn-danger w-100 mt-2" type="submit" value="DELETE">
                 </form>
             </div>
             <div class="tab-pane fade" id="sign-up" role="tabpanel">
@@ -92,10 +88,6 @@
                 <input type="password" class="form-control mb-3" placeholder="Confirm Password" name="passwordConfirm">
                 <input class="btn btn-dark w-100" type="submit" value="SIGN UP">
                 </form>
-            </div>
-            <div class="tab-pane fade" id="guest" role="tabpanel">
-                <input type="text" class="form-control mb-3" placeholder="Username" name="username">
-                <button class="btn btn-dark w-100">CONTINUE AS A GUEST</button>
             </div>
         </div>
     </div>

@@ -49,6 +49,8 @@
         <div class="d-flex gap-3 mt-3">
             <button class="btn btn-custom" style="width: 140px;">Sign In</button>
             <button class="btn btn-custom" style="width: 140px;">Sign Up</button>
+            <!--<input class="btn btn-custom" type="submit" value="Sign In">
+            <input class="btn btn-custom" type="submit" value="Sign Up"> -->
         </div>
     </div>
 </body>
