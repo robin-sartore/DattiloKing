@@ -26,7 +26,7 @@ class login{
                 //header("location: ". URL . "home/homePage");
             }
             else if($result == false){
-                echo "utente non registrato";
+                echo "utente inesistente o password errata";
             }
         }
     }
