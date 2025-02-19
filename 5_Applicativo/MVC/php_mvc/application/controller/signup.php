@@ -21,7 +21,7 @@ class signup{
             $username = $_POST['username'];
             $password = $_POST['password'];
             $passwordConfirm = $_POST['passwordConfirm'];
-            if($password != $passwordConfirm){
+            if($password == $passwordConfirm){
                 $userMapper = new UserMapper();
                 $result = $userMapper->signUpManageModel($username, $password, $passwordConfirm);
                 if($result == false){
