@@ -8,10 +8,10 @@ class UserMapper{
         $this->connection = Database::getConnection();
     }
 
-    public function signUpManageModel($username,$password){
+    public function signUpManageModel($username,$password, $passwordConfirm){
         $utenti = $this->connection->prepare('SELECT * from utente');
         $utenti->execute();
-        foreach ($utenti as $utente) {
+        foreach ($utenti as $utente){
             if($utente['username'] == $username){
                 return false;
             }
@@ -24,5 +24,20 @@ class UserMapper{
         $salvataggioUtente->bindParam(2, $hashedPassword);
         $salvataggioUtente->execute();
         return true;
+    }
+
+    public function loginInManageModel($username, $password){
+        $utenti = $this->connection->prepare('SELECT * from utente');
+        $utenti->execute();
+        foreach ($utenti as $utente) {
+            if($utente['username'] == $username){
+                if(password_verify($password, $utente['password'])){
+                    $_SESSION['logged'] = true;
+                    return true;
+                }
+            }
+        }
+        $_SESSION['logged'] = false;
+        return false;
     }
 }
