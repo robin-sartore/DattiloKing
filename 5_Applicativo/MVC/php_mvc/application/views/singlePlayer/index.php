@@ -39,6 +39,10 @@
             font-weight: bold;
             color: red;
         }
+
+        #key-space {
+            width: 50%;
+        }
     </style>
 </head>
 <body>
@@ -63,21 +67,29 @@
         <button class="key" id="key-H">H</button>
         <button class="key" id="key-J">J</button>
         <button class="key" id="key-K">K</button>
-        <button class="key" id="key-L">L</button> <br>
+        <button class="key" id="key-L">L</button>
+        <button class="key" id="key-ShiftLeft">↑</button>
         <button class="key" id="key-Y">Y</button>
         <button class="key" id="key-X">X</button>
         <button class="key" id="key-C">C</button>
         <button class="key" id="key-V">V</button>
         <button class="key" id="key-B">B</button>
         <button class="key" id="key-N">N</button>
-        <button class="key" id="key-M">M</button> <br>
-        <button class="key" id="key- ">SPACE</button>
+        <button class="key" id="key-M">M</button>
+        <button class="key" id="key-comma">,</button>
+        <button class="key" id="key-point">.</button>
+    </div>
+    <div>
+        <button class="key" id="key-space">SPACE</button>
     </div>
 </div>
 
 <script>
     document.addEventListener('keydown', function(event) {
-        const key = event.key.toUpperCase();
+        let key = event.key.toUpperCase();
+        if (key === " ") key = "space";
+        if (key === ",") key = "comma";
+        if (key === ".") key = "point";
         const button = document.getElementById('key-' + key);
         if (button) {
             button.classList.add('pressed');
@@ -85,7 +97,10 @@
     });
 
     document.addEventListener('keyup', function(event) {
-        const key = event.key.toUpperCase();
+        let key = event.key.toUpperCase();
+        if (key === " ") key = "space";
+        if (key === ",") key = "comma";
+        if (key === ".") key = "point";
         const button = document.getElementById('key-' + key);
         if (button) {
             button.classList.remove('pressed');
