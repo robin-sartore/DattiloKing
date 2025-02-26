@@ -4,7 +4,7 @@ class UserMapper{
 
     private $connection;
     public function __construct(){
-        require_once 'application/models/Database.php';
+        require_once 'Database.php';
         $this->connection = Database::getConnection();
     }
 
@@ -43,30 +43,27 @@ class UserMapper{
 
 
     public function getPhraseModel() {
-        $result = $this->connection->query("SELECT COUNT(*) as total FROM tabella");
-        $row = $result->fetch_assoc();
+        $result = $this->connection->query("SELECT COUNT(*) as total FROM frase");
+        $row = $result->fetch(PDO::FETCH_ASSOC);
         $totalRow = $row['total'];
 
         if ($totalRow <= 0) {
             return "Nessun dato presente nel DB";
         }
-
+        
         $casual = rand(0, $totalRow - 1);
 
-        $query = "SELECT frase FROM tabella LIMIT 1 OFFSET ?";
+        $query = "SELECT testo FROM frase LIMIT 1 OFFSET ?";
         $frase = $this->connection->prepare($query);
-        $frase->bind_param("i", $casual);
+        $frase->bindParam(1, $casual, PDO::PARAM_INT);
         $frase->execute();
 
-        $result = $frase->get_result();
+        $result = $frase->fetch(PDO::FETCH_ASSOC);
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            return $row['frase'];
-        }else {
+        if ($result) {
+            return $result['testo'];
+        } else {
             return "Nessuna frase trovata";
         }
     }
-
-
 }

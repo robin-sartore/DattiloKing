@@ -55,9 +55,9 @@
         }
     </style>
 </head>
-<body onload="stampaTesto()"
+<body onload="stampaTesto()">
 <div class="frase" id="frase">
-    La vita è un viaggio che ci porta a scoprire ogni giorno qualcosa di nuovo su noi stessi e sugli altri. Ogni esperienza, positiva o negativa, ci aiuta a crescere e a diventare persone migliori.
+
 </div>
 <div class="container text-center">
     <div class="keyboard">
@@ -131,15 +131,33 @@
         if (button) {
             button.classList.remove('pressed');
         }
-        }
     });
 
 
     function stampaTesto(){
-        fetch('../../controller/')
+        fetch('../../php_mvc/application/controller/phrase.php')
             .then(response => response.text())
             .then(data => {
                 document.getElementById("frase").innerText = data;
+
+                //let indiceLettera = 0;
+                //let fraseArray = data.split(""); // Converte la frase in un array di caratteri
+                //let letteraPrima;
+                //if (indiceLettera >= fraseArray.length) return;
+
+                //let prossimaLettera = fraseArray[indiceLettera];
+                //if (prossimaLettera.toLowerCase() === data.toLowerCase()) {
+                //    fraseArray[indiceLettera] = `<span class="highlight">${prossimaLettera}</span>`;
+                //    indiceLettera++;
+                //}
+                //else{
+                //    fraseArray[indiceLettera] = `<span class="wrong">${prossimaLettera}</span>`;
+                //    indiceLettera++;
+                //}
+
+
+
+                document.getElementById("frase").innerHTML = fraseArray.join("");
             })
             .catch(error => console.error('Errore:', error));
     }
