@@ -12,10 +12,6 @@ class signup{
         require  'application/views/templates/footer.php';
     }
 
-    public function signUpPage(){
-        require_once 'application/views/signup/index.php';
-    }
-
     public function signUpManage(){
         if(isset($_POST['username']) && !empty($_POST['username']) && isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['passwordConfirm']) && !empty($_POST['passwordConfirm'])){
             $username = $_POST['username'];

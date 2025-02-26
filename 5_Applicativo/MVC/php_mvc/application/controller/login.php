@@ -11,10 +11,6 @@ class login{
         require  'application/views/templates/footer.php';
     }
 
-    public function logInPage(){
-        require_once  'application/views/login/index.php';
-    }
-
     public function logInManage(){
         if(isset($_POST['username']) && !empty($_POST['username']) && isset($_POST['password']) && !empty($_POST['password'])){
             $username = $_POST['username'];

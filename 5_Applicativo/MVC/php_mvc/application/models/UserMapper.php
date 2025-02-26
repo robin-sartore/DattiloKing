@@ -40,4 +40,33 @@ class UserMapper{
         $_SESSION['logged'] = false;
         return false;
     }
+
+
+    public function getPhraseModel() {
+        $result = $this->connection->query("SELECT COUNT(*) as total FROM tabella");
+        $row = $result->fetch_assoc();
+        $totalRow = $row['total'];
+
+        if ($totalRow <= 0) {
+            return "Nessun dato presente nel DB";
+        }
+
+        $casual = rand(0, $totalRow - 1);
+
+        $query = "SELECT frase FROM tabella LIMIT 1 OFFSET ?";
+        $frase = $this->connection->prepare($query);
+        $frase->bind_param("i", $casual);
+        $frase->execute();
+
+        $result = $frase->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['frase'];
+        }else {
+            return "Nessuna frase trovata";
+        }
+    }
+
+
 }

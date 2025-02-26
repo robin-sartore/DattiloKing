@@ -12,7 +12,7 @@
 
         .keyboard {
             display: grid;
-            grid-template-columns: repeat(10, 1fr); /* 10 colonne per tasti */
+            grid-template-columns: repeat(11, 1fr);
             gap: 20px;
             justify-content: center;
             padding: 20px;
@@ -43,12 +43,35 @@
         #key-space {
             width: 50%;
         }
+
+        .frase{
+            color: white;
+            font-size: 50px;
+            width: 65%;
+            margin-right: auto;
+            margin-left: auto;
+            text-align: justify;
+            margin-top: 80px;
+        }
     </style>
 </head>
-<body>
+<body onload="stampaTesto()"
+<div class="frase" id="frase">
+    La vita è un viaggio che ci porta a scoprire ogni giorno qualcosa di nuovo su noi stessi e sugli altri. Ogni esperienza, positiva o negativa, ci aiuta a crescere e a diventare persone migliori.
+</div>
 <div class="container text-center">
-    <h1 class="mt-5">Dattilo King</h1>
     <div class="keyboard">
+        <button class="key" id="key-1">1</button>
+        <button class="key" id="key-2">2</button>
+        <button class="key" id="key-3">3</button>
+        <button class="key" id="key-4">4</button>
+        <button class="key" id="key-5">5</button>
+        <button class="key" id="key-6">6</button>
+        <button class="key" id="key-7">7</button>
+        <button class="key" id="key-8">8</button>
+        <button class="key" id="key-9">9</button>
+        <button class="key" id="key-0">0</button>
+        <button class="key" id="key-'">'</button>
         <button class="key" id="key-Q">Q</button>
         <button class="key" id="key-W">W</button>
         <button class="key" id="key-E">E</button>
@@ -58,7 +81,8 @@
         <button class="key" id="key-U">U</button>
         <button class="key" id="key-I">I</button>
         <button class="key" id="key-O">O</button>
-        <button class="key" id="key-P">P</button> <br>
+        <button class="key" id="key-P">P</button>
+        <button class="key" id="key-È">È</button>
         <button class="key" id="key-A">A</button>
         <button class="key" id="key-S">S</button>
         <button class="key" id="key-D">D</button>
@@ -68,7 +92,9 @@
         <button class="key" id="key-J">J</button>
         <button class="key" id="key-K">K</button>
         <button class="key" id="key-L">L</button>
-        <button class="key" id="key-ShiftLeft">↑</button>
+        <button class="key" id="key-É">É</button>
+        <button class="key" id="key-À">À</button>
+        <button class="key" id="key-SHIFT">↑</button>
         <button class="key" id="key-Y">Y</button>
         <button class="key" id="key-X">X</button>
         <button class="key" id="key-C">C</button>
@@ -105,7 +131,20 @@
         if (button) {
             button.classList.remove('pressed');
         }
+        }
     });
+
+
+    function stampaTesto(){
+        fetch('../../controller/')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("frase").innerText = data;
+            })
+            .catch(error => console.error('Errore:', error));
+    }
+
+
 </script>
 </body>
 </html>
