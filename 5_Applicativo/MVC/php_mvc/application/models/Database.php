@@ -1,11 +1,10 @@
 <?php
 
 class Database{
-
-    private static $username = USERNAME;
-    private static $password = PASSWORD;
-    private static $hostname = HOST;
-    private static $database = DATABASE;
+    private static $username = "root";
+    private static $password = "";
+    private static $hostname = "localhost";
+    private static $database = "dattiloking";
 
     private static $_connection = null;
 

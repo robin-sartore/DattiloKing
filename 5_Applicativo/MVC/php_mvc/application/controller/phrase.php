@@ -1,9 +1,14 @@
 <?php
 class phrase{
+
+    public function __construct(){
+        require_once '../models/UserMapper.php';
+    }
     public function getPhrase(){
-        require_once 'applicaiton/models/UserMapper.php';
         $userMapper = new UserMapper();
         $phrase = $userMapper->getPhraseModel();
         echo $phrase;
     }
 }
+$phraseController = new phrase();
+$phraseController->getPhrase();
