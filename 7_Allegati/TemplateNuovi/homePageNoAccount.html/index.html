@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dattilo King</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0b0d21;
+            color: white;
+            text-align: center;
+            font-family: 'Lalezar', cursive;
+            margin: 0;
+        }
+        .title {
+            font-size: 10rem;
+            font-weight: bold;
+            color: red;
+        }
+        .subtitle {
+            font-size: 2.5rem;
+        }
+        .btn-custom {
+            font-size: 1.5rem;
+            padding: 15px 30px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            color: black;
+            font-weight: bold;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.5);
+            width: 300px;
+            margin: 20px auto;
+        }
+        .btn-custom:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .settings-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .settings-btn img {
+            width: 50px;
+        }
+
+        /* Pannello Impostazioni */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            left: -350px;
+            width: 350px;
+            height: 100%;
+            background-color: #d3d3d3;
+            padding: 20px;
+            transition: left 0.3s ease;
+            box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.5);
+            font-family: Arial, sans-serif;
+        }
+        .settings-panel.open {
+            left: 0;
+        }
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+        }
+        .close-btn {
+            cursor: pointer;
+            font-size: 30px;
+        }
+        .settings-content {
+            margin-top: 20px;
+        }
+        .settings-content h3 {
+            font-size: 20px;
+            color: black;
+        }
+        .dropdown {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #b5b5b5;
+            font-size: 16px;
+            color: black;
+        }
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .radio-group label {
+            font-size: 18px;
+            color: black;
+        }
+        .settings-content button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        .settings-content button:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex flex-column justify-content-center align-items-center vh-100">
+        <!-- Pulsante delle impostazioni con immagine -->
+        <button class="settings-btn" onclick="openSettings()">
+            <img src="../image/settings.png" alt="Settings">
+        </button>
+
+        <!-- Titolo e contenuto principale -->
+        <h1 class="title">Dattilo King</h1>
+        <p class="subtitle">The best way to learn to write fast</p>
+        <button onclick="openSingle()" class="btn btn-custom">Single player</button>
+        <button onclick="openMulti()" class="btn btn-custom">Multi player</button>
+        <div class="d-flex gap-3 mt-3">
+            <button class="btn btn-custom" style="width: 140px;" onclick="openSignIn()">Sign In</button>
+            <button class="btn btn-custom" style="width: 140px;" onclick="openSignUp()">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- Pannello Impostazioni -->
+    <div id="settingsPanel" class="settings-panel">
+        <div class="settings-header">
+            <span>Settings</span>
+            <span class="close-btn" onclick="closeSettings()">×</span>
+        </div>
+        <div class="settings-content">
+            <h3>Lingua</h3>
+            <select class="dropdown">
+                <option>English</option>
+                <option>Italiano</option>
+                <option>Español</option>
+                <option>Français</option>
+            </select>
+            
+            <h3 class="mt-4">Audio</h3>
+            <div class="radio-group">
+                <label><input type="radio" name="audio" checked> On</label>
+                <label><input type="radio" name="audio"> Off</label>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+
+    <script>
+        function openSettings() {
+            document.getElementById("settingsPanel").classList.add("open");
+        }
+        function openMulti() {
+            window.alert("Accedi o registrati per poter giocare in multi player!");
+        }
+        function openSingle() {
+            window.open("../singlePlayer/index.html");
+        }
+        
+        function closeSettings() {
+            document.getElementById("settingsPanel").classList.remove("open");
+        }
+
+        // Funzione per il logout
+        function logout() {
+            alert('Logout effettuato!'); // Sostituisci con la logica effettiva di logout
+            closeSettings(); // Chiudi il pannello dopo il logout
+        }
+
+        function openSignIn(){
+            window.open("../signInSignup.html/index.html");
+        }
+
+        function openSignUp(){
+            window.open("../signInSignup.html/index.html");
+        }
+
+
+        // Funzione per eliminare l'account
+        function deleteAccount() {
+            if (confirm('Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile.')) {
+                alert('Account eliminato!'); // Sostituisci con la logica effettiva di eliminazione
+                closeSettings(); // Chiudi il pannello dopo l'eliminazione
+            }
+        }
+    </script>
+</body>
+</html>
