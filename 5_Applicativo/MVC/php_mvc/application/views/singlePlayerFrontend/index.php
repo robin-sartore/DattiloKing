@@ -53,11 +53,18 @@
             text-align: justify;
             margin-top: 80px;
         }
+
+        .highlight {
+            color: #7efc2e;
+        }
+        .wrong{
+            color: red;
+        }
     </style>
 </head>
-<body onload="stampaTesto()"
+<body onload="stampaTesto()">
 <div class="frase" id="frase">
-    La vita è un viaggio che ci porta a scoprire ogni giorno qualcosa di nuovo su noi stessi e sugli altri. Ogni esperienza, positiva o negativa, ci aiuta a crescere e a diventare persone migliori.
+
 </div>
 <div class="container text-center">
     <div class="keyboard">
@@ -111,7 +118,11 @@
 </div>
 
 <script>
+    let tastiPremuti = {};
     document.addEventListener('keydown', function(event) {
+        if (event.key === "Shift" || event.key === "Control" || event.key === "Alt" || event.key === "AltGraph") {
+            return;
+        }
         let key = event.key.toUpperCase();
         if (key === " ") key = "space";
         if (key === ",") key = "comma";
@@ -119,6 +130,11 @@
         const button = document.getElementById('key-' + key);
         if (button) {
             button.classList.add('pressed');
+        }
+
+        if (!tastiPremuti[key]) {
+            tastiPremuti[key] = true;
+            stampaTesto(event.key);
         }
     });
 
@@ -131,15 +147,36 @@
         if (button) {
             button.classList.remove('pressed');
         }
-        }
+        tastiPremuti[key] = false;
     });
 
-
-    function stampaTesto(){
-        fetch('../../controller/')
+    let indiceLettera = 0;
+    let primoAccesso = true;
+    let fraseArray = [];
+    function stampaTesto(lettera){
+        fetch('../../php_mvc/application/controller/phrase.php')
             .then(response => response.text())
             .then(data => {
-                document.getElementById("frase").innerText = data;
+                if(primoAccesso){
+                    fraseArray = data.split(""); // Converte la frase in un array di caratteri
+                    document.getElementById("frase").innerText = data;
+                    primoAccesso = false;
+                }else{
+                    if (indiceLettera >= fraseArray.length) return;
+
+                    let prossimaLettera = fraseArray[indiceLettera];
+                    console.log(prossimaLettera);
+                    console.log(lettera);
+                    if (prossimaLettera.toLowerCase() === lettera.toLowerCase()) {
+                        fraseArray[indiceLettera] = `<span class="highlight">${prossimaLettera}</span>`;
+                        indiceLettera++;
+                    }
+                    else{
+                        fraseArray[indiceLettera] = `<span class="wrong">${prossimaLettera}</span>`;
+                        indiceLettera++;
+                    }
+                    document.getElementById("frase").innerHTML = fraseArray.join("");
+                }
             })
             .catch(error => console.error('Errore:', error));
     }
