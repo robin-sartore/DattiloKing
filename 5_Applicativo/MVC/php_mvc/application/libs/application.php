@@ -1,7 +1,7 @@
 <?php
 
 
-//use controller\home;
+//use controller\homeNotLogged;
 
 class Application{
     private $url_controller = null;
@@ -39,7 +39,7 @@ class Application{
         else{
             require './application/controller/home.php';
             $home = new home();
-            $home->index();
+            $home->notLogged();
         }
     }
 

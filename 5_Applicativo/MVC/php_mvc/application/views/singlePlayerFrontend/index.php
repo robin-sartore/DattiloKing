@@ -97,7 +97,7 @@
         Tempo:
     </h2>
     <h1 id="tempo">
-        Sec
+        sec
     </h1>
 </div>
 
@@ -161,7 +161,8 @@
     let tastiPremuti = {};
     document.addEventListener('keydown', function(event) {
         if(primoTastoPremuto == false){
-            intervalloTempo = setInterval(incrementaTempo, 1000)
+            intervalloTempo = setInterval(incrementaTempo, 1000);
+            primoTastoPremuto = true;
         }
         if (event.key === "Shift") {
             let key = event.key.toUpperCase();
@@ -231,12 +232,16 @@
                                 document.getElementById('percentualeCorrettezza').innerText = percentualeCorrettezza+"%";
 
                                 clearInterval(intervalloTempo);
-                                let velocita = (fraseArray.length/tempo)*60;
+                                //let velocita = ((fraseArray.length/tempo)*60).toFixed(1);
+                                let velocita = (fraseArray.length/5)/(tempo/60);
                                 document.getElementById('velocita').innerHTML = velocita + " WPM";
+
+                                document.getElementById('tempo').innerHTML = tempo + " sec";
+
                                 tempo = 0;
                                 primoTastoPremuto = false;
-
                                 indiceLettera = 0;
+                                primoTastoPremuto = false;
                                 primoAccesso = true;
                                 fraseArray = [];
                                 numeroErrori = 0;
@@ -257,7 +262,9 @@
 
     let tempo = 0;
     function incrementaTempo(){
+
         tempo++;
+        console.log(tempo);
     }
 
 

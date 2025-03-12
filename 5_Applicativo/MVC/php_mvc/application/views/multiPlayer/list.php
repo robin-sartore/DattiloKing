@@ -1,5 +1,6 @@
 <h1>Siamo in lista</h1>
 
+
 <table style="border: 1px solid">
     <?php foreach ($users as $user): ?>
     <tr>
@@ -9,3 +10,4 @@
     </tr>
     <?php endforeach;?>
 </table>
+

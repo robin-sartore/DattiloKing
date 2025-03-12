@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dattilo King</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0b0d21;
+            color: white;
+            text-align: center;
+            font-family: 'Lalezar', cursive;
+            margin: 0;
+            overflow: hidden; /* Evita lo scroll */
+        }
+        .title {
+            font-size: 6rem; /* Riduci la dimensione del titolo */
+            font-weight: bold;
+            color: red;
+            margin-bottom: 20px; /* Spazio sotto il titolo */
+        }
+        .subtitle {
+            font-size: 1.5rem; /* Riduci la dimensione del testo */
+            text-align: justify;
+            max-width: 800px; /* Limita la larghezza del testo */
+            margin: 0 auto; /* Centra il testo */
+            padding: 0 20px; /* Aggiunge padding laterale */
+        }
+
+        /* Container principale */
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Allinea il contenuto in alto */
+            align-items: center; /* Centra orizzontalmente */
+            height: 100vh; /* Altezza uguale alla viewport */
+            padding-top: 80px; /* Spazio dall'alto */
+            overflow-y: auto; /* Abilita lo scroll verticale se necessario */
+        }
+
+        /* Pulsanti in alto */
+        .top-buttons {
+            position: fixed; /* Fissa i pulsanti in alto */
+            top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+            z-index: 1000; /* Assicura che i pulsanti siano sopra il contenuto */
+        }
+        .top-buttons img {
+            width: 50px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .top-buttons img:hover {
+            opacity: 0.7;
+        }
+
+        /* Pannello Impostazioni */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            left: -350px;
+            width: 350px;
+            height: 100%;
+            background-color: #ebe8e8;
+            padding: 20px;
+            transition: left 0.3s ease;
+            box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.5);
+            font-family: Arial, sans-serif;
+            z-index: 1001; /* Assicura che il pannello sia sopra tutto */
+        }
+        .settings-panel.open {
+            left: 0;
+        }
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+        }
+        .close-btn {
+            cursor: pointer;
+            font-size: 30px;
+        }
+        .settings-content {
+            margin-top: 20px;
+        }
+        .settings-content h3 {
+            font-size: 20px;
+            color: black;
+        }
+        .dropdown {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #b5b5b5;
+            font-size: 16px;
+            color: black;
+        }
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .radio-group label {
+            font-size: 18px;
+            color: black;
+        }
+        .settings-content button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        .settings-content button:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+<body>
+    <!-- Pulsanti in alto -->
+    <div class="top-buttons">
+        <div onclick="openSettings()">
+            <img src="../image/setting.jpg" alt="Impostazioni">
+        </div>
+        <div onclick="goHome()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12 2c5.53 0 10 4.47 10 10s-4.47 10-10 10S2 17.53 2 12S6.47 2 12 2m3.59 5L12 10.59L8.41 7L7 8.41L10.59 12L7 15.59L8.41 17L12 13.41L15.59 17L17 15.59L13.41 12L17 8.41z"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Contenuto principale -->
+    <div class="container">
+        <h1 class="title">Tutorial</h1>
+        <p class="subtitle">DatiloKing è un sito di dattilografia, tecnica di scrittura con tastiera.</p>
+        <p class="subtitle">Si può usare da solo cliccando sul bottone SinglePlayer, apparirà una frase casuale e scrivendo con la tastiera si colorerà di verde se si avrà scritto giusto e di rosso se sbagli. Una volta finita una frase ne apparirà un'altra e quando si vuole uscire basta cliccare la freccia per tornare alla home e le statistiche verranno salvate fino alla frase precedente. Una volta nella home si possono vedere le proprie statistiche cliccando sul tasto del profilo raffigurante un mezzo busto.</p>
+        <p class="subtitle">Solo se si è loggati si potrà accedere alla modalità multiplayer cliccando sul tasto. Questa modalità ti permette di giocare contro i tuoi amici per vedere chi tra voi sia il miglior dattilografo. Un giocatore può creare una stanza cliccando sul tasto "Crea Stanza" e potrà condividere il codice che gli altri player useranno per entrare nella stanza cliccando il tasto "Unisciti". Il giocatore che ha avviato la stanza sceglierà il numero di round e avvierà la partita. A ogni round i giocatori vedranno la stessa frase e dovranno riscriverla il più velocemente possibile. Alla fine della partita si vedrà una classifica con le varie statistiche di ogni player e chi ha vinto.</p>
+        <p class="subtitle">Nella Home cliccando il tasto delle impostazioni si potrà selezionare la lingua e gestire il volume del suono. In più, potrai eseguire il logout o eliminare l'account e tutti i dati salvati.</p>
+    </div>
+
+    <!-- Pannello Impostazioni -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2>Impostazioni</h2>
+            <span class="close-btn" onclick="closeSettings()">&times;</span>
+        </div>
+        <div class="settings-content">
+            <h3>Lingua</h3>
+            <select class="dropdown">
+                <option value="it">Italiano</option>
+                <option value="en">Inglese</option>
+            </select>
+            <h3>Volume</h3>
+            <input type="range" min="0" max="100" value="50" class="dropdown">
+            <button onclick="logout()">Logout</button>
+            <button onclick="deleteAccount()" style="margin-top: 10px; background: #ff4444;">Elimina Account</button>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per aprire il pannello delle impostazioni
+        function openSettings() {
+            document.getElementById('settingsPanel').classList.add('open');
+        }
+
+        // Funzione per chiudere il pannello delle impostazioni
+        function closeSettings() {
+            document.getElementById('settingsPanel').classList.remove('open');
+        }
+
+        // Funzione per tornare alla home
+        function goHome() {
+            window.location.href = "index.html"; // Reindirizza alla home
+        }
+
+        // Funzione per il logout
+        function logout() {
+            alert("Logout effettuato!");
+            // Aggiungi qui la logica per il logout
+        }
+
+        // Funzione per eliminare l'account
+        function deleteAccount() {
+            if (confirm("Sei sicuro di voler eliminare l'account?")) {
+                alert("Account eliminato!");
+                // Aggiungi qui la logica per eliminare l'account
+            }
+        }
+    </script>
+</body>
+</html>
