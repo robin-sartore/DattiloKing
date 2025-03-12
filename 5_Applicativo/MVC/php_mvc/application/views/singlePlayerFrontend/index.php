@@ -60,9 +60,47 @@
         .wrong{
             color: red;
         }
+        .sottolineato{
+            text-decoration: underline;
+        }
+
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: #97131e;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+        }
+
     </style>
 </head>
 <body onload="stampaTesto()">
+
+<div class="sidebar">
+    <h2>
+        Velocità:
+    </h2>
+    <h1 id="velocita">
+        WPM
+    </h1> <br> <br>
+    <h2>
+        Accuratezza:
+    </h2>
+    <h1 id="percentualeCorrettezza">
+        %
+    </h1> <br> <br>
+    <h2>
+        Tempo:
+    </h2>
+    <h1 id="tempo">
+        Sec
+    </h1>
+</div>
+
 <div class="frase" id="frase">
 
 </div>
@@ -118,9 +156,19 @@
 </div>
 
 <script>
+    let intervalloTempo;
+    let primoTastoPremuto = false;
     let tastiPremuti = {};
     document.addEventListener('keydown', function(event) {
-        if (event.key === "Shift" || event.key === "Control" || event.key === "Alt" || event.key === "AltGraph") {
+        if(primoTastoPremuto == false){
+            intervalloTempo = setInterval(incrementaTempo, 1000)
+        }
+        if (event.key === "Shift") {
+            let key = event.key.toUpperCase();
+            const button = document.getElementById('key-' + key);
+            if (button) {
+                button.classList.add('pressed');
+            }
             return;
         }
         let key = event.key.toUpperCase();
@@ -150,9 +198,13 @@
         tastiPremuti[key] = false;
     });
 
+
     let indiceLettera = 0;
     let primoAccesso = true;
+    let letteraPrecedentementeSbagliata = false;
     let fraseArray = [];
+
+    let numeroErrori = 0;
     function stampaTesto(lettera){
         fetch('../../php_mvc/application/controller/phrase.php')
             .then(response => response.text())
@@ -162,23 +214,50 @@
                     document.getElementById("frase").innerText = data;
                     primoAccesso = false;
                 }else{
-                    if (indiceLettera >= fraseArray.length) return;
+                    let prossimaLettera = fraseArray[indiceLettera].replace(/\u0332/g, '');
+                    if (prossimaLettera === lettera) {
+                        if(indiceLettera <= fraseArray.length-2){
+                            let letteraDopoProssimaLettera = fraseArray[indiceLettera+1];
+                            fraseArray[indiceLettera+1] = letteraDopoProssimaLettera  + '\u0332';
+                        }
+                        if(letteraPrecedentementeSbagliata === true){
+                            fraseArray[indiceLettera] = `<span class="wrong">${prossimaLettera}</span>`;
+                            letteraPrecedentementeSbagliata = false;
+                            numeroErrori++;
+                        }else{
+                            fraseArray[indiceLettera] = `<span class="highlight">${prossimaLettera}</span>`;
+                            if(indiceLettera === fraseArray.length-1){
+                                let percentualeCorrettezza = 100-(((numeroErrori/fraseArray.length)*100).toFixed(1));
+                                document.getElementById('percentualeCorrettezza').innerText = percentualeCorrettezza+"%";
 
-                    let prossimaLettera = fraseArray[indiceLettera];
-                    console.log(prossimaLettera);
-                    console.log(lettera);
-                    if (prossimaLettera.toLowerCase() === lettera.toLowerCase()) {
-                        fraseArray[indiceLettera] = `<span class="highlight">${prossimaLettera}</span>`;
+                                clearInterval(intervalloTempo);
+                                let velocita = (fraseArray.length/tempo)*60;
+                                document.getElementById('velocita').innerHTML = velocita + " WPM";
+                                tempo = 0;
+                                primoTastoPremuto = false;
+
+                                indiceLettera = 0;
+                                primoAccesso = true;
+                                fraseArray = [];
+                                numeroErrori = 0;
+
+                                stampaTesto();
+                            }
+                        }
                         indiceLettera++;
                     }
                     else{
-                        fraseArray[indiceLettera] = `<span class="wrong">${prossimaLettera}</span>`;
-                        indiceLettera++;
+                        letteraPrecedentementeSbagliata = true;
                     }
                     document.getElementById("frase").innerHTML = fraseArray.join("");
                 }
             })
             .catch(error => console.error('Errore:', error));
+    }
+
+    let tempo = 0;
+    function incrementaTempo(){
+        tempo++;
     }
 
 
