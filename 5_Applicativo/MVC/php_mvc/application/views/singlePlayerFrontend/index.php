@@ -140,20 +140,20 @@
             .then(data => {
                 document.getElementById("frase").innerText = data;
 
-                //let indiceLettera = 0;
-                //let fraseArray = data.split(""); // Converte la frase in un array di caratteri
-                //let letteraPrima;
-                //if (indiceLettera >= fraseArray.length) return;
+                let indiceLettera = 0;
+                let fraseArray = data.split(""); // Converte la frase in un array di caratteri
+                let letteraPrima;
+                if (indiceLettera >= fraseArray.length) return;
 
-                //let prossimaLettera = fraseArray[indiceLettera];
-                //if (prossimaLettera.toLowerCase() === data.toLowerCase()) {
-                //    fraseArray[indiceLettera] = `<span class="highlight">${prossimaLettera}</span>`;
-                //    indiceLettera++;
-                //}
-                //else{
-                //    fraseArray[indiceLettera] = `<span class="wrong">${prossimaLettera}</span>`;
-                //    indiceLettera++;
-                //}
+                let prossimaLettera = fraseArray[indiceLettera];
+                if (prossimaLettera.toLowerCase() === data.toLowerCase()) {
+                    fraseArray[indiceLettera] = `<span class="highlight">${prossimaLettera}</span>`;
+                    indiceLettera++;
+                }
+                else{
+                    fraseArray[indiceLettera] = `<span class="wrong">${prossimaLettera}</span>`;
+                    indiceLettera++;
+                }
 
 
 
