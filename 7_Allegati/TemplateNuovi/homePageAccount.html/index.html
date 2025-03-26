@@ -194,10 +194,10 @@
         function closeSettings() {
             document.getElementById("settingsPanel").classList.remove("open");
         }
-        // Funzione per il logout
+        // Funzione per il logout/delete
         function logout() {
             alert('Logout effettuato!'); // Sostituisci con la logica effettiva di logout
-            closeSettings(); // Chiudi il pannello dopo il logout
+            window.open("../homePageNoAccount.html/index.html");
         }
 
         function openSinglePlayer(){
