@@ -145,6 +145,7 @@
         }
         .player-container {
             margin-top: 20px;
+            margin-left: 35px;
             background: rgba(255, 255, 255, 0.1);
             padding: 20px;
             border-radius: 10px;
@@ -174,20 +175,23 @@
 
     <!-- Titolo e contenuto principale -->
     <h1 class="title">Create Room</h1>
-    <p class="subtitle">Code</p>
-    <button class="btn btn-custom">#Jp6z</button>
     <!-- Se possibile fare che se si clica si copia-->
-    <p class="subtitle">Numero Round</p>
-    <input class="text-custom" type="text">
+    <form action="<?php echo URL ?>play/multiPlayerGameRoom" method="POST">
+        <p class="subtitle">Code</p>
+        <input class="text-custom" type="text" name="code" disabled value="#Jp6z">
 
-    <p class="subtitle">Giocatori nella stanza:</p>
-    <div id="playerContainer" class="player-container">Player 1 (tu)
+
+        <p class="subtitle">Numero Round</p>
+        <input class="text-custom" type="number" name="rounds" required>
+
+        <p class="subtitle">Giocatori nella stanza:</p>
+        <div id="playerContainer" class="player-container">
+            Player 1 (tu)
+            <br>
+            player 2
+        </div>
         <br>
-        player 2
-    </div>
-    <br>
-    <form action="<?php echo URL?>play/multiPlayerCreateRoom">
-        <button class="btn btn-custom">Start game</button>
+        <button class="btn btn-custom" type="submit">Start game</button>
     </form>
 </body>
 </html>

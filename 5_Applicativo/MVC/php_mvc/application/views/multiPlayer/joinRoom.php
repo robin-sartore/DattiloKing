@@ -158,11 +158,11 @@
 
     <!-- Titolo e contenuto principale -->
     <h1 class="title">Join Room</h1>
-    <p class="subtitle">Insert Code</p>
-    <input class="text-custom" type="text">
-    <form action="<?php echo URL?>play/multiPlayerRoomList">
+    <form action="<?php echo URL?>play/multiPlayerRoomList" method="POST">
+        <p class="subtitle">Insert Code</p>
+        <input class="text-custom" type="text" name="code">
+        <br>
         <button class="btn btn-custom">Join Room</button>
     </form>
-
 </body>
 </html>

@@ -14,6 +14,11 @@ class play{
     }
 
     public function multiPlayerJoinRoom(){
+        session_start();
+        // Se il valore è stato inviato via POST, salvalo nella sessione
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["code"])) {
+            $_SESSION["code"] = $_POST["code"];
+        }
         require_once 'application/views/multiPlayer/joinRoom.php';
     }
 
@@ -23,5 +28,14 @@ class play{
 
     public function multiPlayerLeaderboard(){
         require_once 'application/views/multiPlayer/leaderboard.php';
+    }
+
+    public function multiPlayerGameRoom(){
+        session_start();
+        // Se il valore è stato inviato via POST, salvalo nella sessione
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["rounds"])) {
+            $_SESSION["rounds"] = intval($_POST["rounds"]);
+        }
+        require_once 'application/views/multiPlayer/gameRoom.php';
     }
 }
