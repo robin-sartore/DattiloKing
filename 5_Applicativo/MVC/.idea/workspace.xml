@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="155b3dc2-68be-4448-88d5-b9a8a6f20cc2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/php_mvc/application/controller/lingua.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/php_mvc/application/controller/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/controller/home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/php_mvc/application/controller/save.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/controller/save.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/php_mvc/application/controller/signin.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/controller/signin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/php_mvc/application/controller/signup.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/controller/signup.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/php_mvc/application/models/UserMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/models/UserMapper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/php_mvc/application/views/account/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/views/account/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/php_mvc/application/views/homeLogged/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/views/homeLogged/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/php_mvc/application/views/singlePlayerFrontend/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/views/singlePlayerFrontend/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +79,7 @@
       <workItem from="1741779958038" duration="9736000" />
       <workItem from="1742975789309" duration="11758000" />
       <workItem from="1743577435104" duration="102000" />
-      <workItem from="1743577539185" duration="18272000" />
+      <workItem from="1743577539185" duration="18807000" />
     </task>
     <servers />
   </component>
