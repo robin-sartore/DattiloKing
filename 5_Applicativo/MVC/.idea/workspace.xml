@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="155b3dc2-68be-4448-88d5-b9a8a6f20cc2" name="Changes" comment="" />
+    <list default="true" id="155b3dc2-68be-4448-88d5-b9a8a6f20cc2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/php_mvc/application/controller/save.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php_mvc/application/models/UserMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/models/UserMapper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php_mvc/application/views/singlePlayerFrontend/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/views/singlePlayerFrontend/index.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,7 +21,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -30,7 +35,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/I3AA/M306/DattiloKing/DattiloKing/5_Applicativo/MVC/php_mvc/application/views/login&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/I3AA/M306/DattiloKing/DattiloKing/5_Applicativo/MVC&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -76,6 +81,8 @@
       <workItem from="1740554778996" duration="19934000" />
       <workItem from="1741779958038" duration="9736000" />
       <workItem from="1742975789309" duration="11758000" />
+      <workItem from="1743577435104" duration="102000" />
+      <workItem from="1743577539185" duration="14000" />
     </task>
     <servers />
   </component>

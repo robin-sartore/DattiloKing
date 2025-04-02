@@ -159,9 +159,10 @@
     let intervalloTempo;
     let primoTastoPremuto = false;
     let tastiPremuti = {};
+
     document.addEventListener('keydown', function(event) {
         if(primoTastoPremuto == false){
-            intervalloTempo = setInterval(incrementaTempo, 1000);
+            intervalloTempo = setInterval(incrementaTempo, 100);
             primoTastoPremuto = true;
         }
         if (event.key === "Shift") {
@@ -204,8 +205,8 @@
     let primoAccesso = true;
     let letteraPrecedentementeSbagliata = false;
     let fraseArray = [];
-
     let numeroErrori = 0;
+
     function stampaTesto(lettera){
         fetch('../../php_mvc/application/controller/phrase.php')
             .then(response => response.text())
@@ -225,29 +226,32 @@
                             fraseArray[indiceLettera] = `<span class="wrong">${prossimaLettera}</span>`;
                             letteraPrecedentementeSbagliata = false;
                             numeroErrori++;
-                        }else{
+                        }
+                        else{
                             fraseArray[indiceLettera] = `<span class="highlight">${prossimaLettera}</span>`;
-                            if(indiceLettera === fraseArray.length-1){
-                                let percentualeCorrettezza = 100-(((numeroErrori/fraseArray.length)*100).toFixed(1));
-                                document.getElementById('percentualeCorrettezza').innerText = percentualeCorrettezza+"%";
+                        }
+                        if(indiceLettera === fraseArray.length-1){
+                            let percentualeCorrettezza = 100-(((numeroErrori/fraseArray.length)*100).toFixed(1));
+                            document.getElementById('percentualeCorrettezza').innerText = percentualeCorrettezza+"%";
 
-                                clearInterval(intervalloTempo);
-                                //let velocita = ((fraseArray.length/tempo)*60).toFixed(1);
-                                let velocita = (fraseArray.length/5)/(tempo/60);
-                                document.getElementById('velocita').innerHTML = velocita + " WPM";
+                            clearInterval(intervalloTempo);
+                            let velocita = (fraseArray.length/5)/(tempo/60);
+                            document.getElementById('velocita').innerHTML = velocita.toFixed(1) + " WPM";
 
-                                document.getElementById('tempo').innerHTML = tempo + " sec";
+                            document.getElementById('tempo').innerHTML = tempo.toFixed(1)+ " sec";
 
-                                tempo = 0;
-                                primoTastoPremuto = false;
-                                indiceLettera = 0;
-                                primoTastoPremuto = false;
-                                primoAccesso = true;
-                                fraseArray = [];
-                                numeroErrori = 0;
+                            salvaStatistiche(percentualeCorrettezza,velocita,tempo);
 
-                                stampaTesto();
-                            }
+                            tempo = 0;
+                            primoTastoPremuto = false;
+                            indiceLettera = -1;
+                            primoTastoPremuto = false;
+                            letteraPrecedentementeSbagliata = false;
+                            primoAccesso = true;
+                            fraseArray = [];
+                            numeroErrori = 0;
+
+                            stampaTesto();
                         }
                         indiceLettera++;
                     }
@@ -260,11 +264,32 @@
             .catch(error => console.error('Errore:', error));
     }
 
-    let tempo = 0;
+    let tempo = 0.0;
     function incrementaTempo(){
+        tempo += 0.1;
+    }
 
-        tempo++;
-        console.log(tempo);
+    function salvaStatistiche(percentualeCorrettezza,velocita,tempo){
+        const dati = {
+            accuratezza: percentualeCorrettezza,
+            velocita: velocita,
+            tempo: tempo
+        };
+
+        fetch('../../php_mvc/application/controller/save.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dati)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Risposta dal server:', data);
+        })
+        .catch(error => {
+            console.error('Errore nella richiesta:', error);
+        });
     }
 
 

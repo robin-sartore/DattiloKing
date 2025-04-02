@@ -66,4 +66,26 @@ class UserMapper{
             return "Nessuna frase trovata";
         }
     }
+
+    public function saveStatsModel($accuratezza,$velocita,$tempo){
+        //$pdoQueryTurno = $this->connection->prepare('SELECT MAX(turno) from turno_storico');
+        //$ultimoTurnoUtente = $pdoQueryTurno->execute();
+        //$numeroTurno = $ultimoTurnoUtente+1;
+
+        // Aggiungere tutti i campi della tabella una volta che verrà incorporato il login in questo MVC
+        $pdoQuerySalvataggio = $this->connection->prepare('INSERT INTO turno_storico(accuratezza, velocita, tempo, data) VALUES (?, ?, ?, ?)');
+        $pdoQuerySalvataggio->bindParam(1, $accuratezza);
+        $pdoQuerySalvataggio->bindParam(2, $velocita);
+        $pdoQuerySalvataggio->bindParam(3, $tempo);
+        $dataAttuale = date('Y-m-d');
+        $pdoQuerySalvataggio->bindParam(4, $dataAttuale);
+
+        $executed = $pdoQuerySalvataggio->execute();
+
+        if($executed && $pdoQuerySalvataggio->rowCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
