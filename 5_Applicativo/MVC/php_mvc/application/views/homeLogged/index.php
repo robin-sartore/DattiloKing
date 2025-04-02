@@ -123,7 +123,7 @@
         }
 
         .btn-home img {
-            width: 50px; /* Regola la dimensione dell'icona */
+            width: 50px;
             height: auto;
             transition: opacity 0.3s;
         }
@@ -136,12 +136,10 @@
 </head>
 <body>
 <div class="container d-flex flex-column justify-content-center align-items-center vh-100">
-    <!-- Icona delle impostazioni -->
     <div class="sett" onclick="openSettings()">
         <img src="<?php echo URL?>application/views/images/settings.png" alt="Settings">
     </div>
 
-    <!-- Titolo e contenuto principale -->
     <h1 class="title">Dattilo King</h1>
     <p class="subtitle">The best way to learn to write fast</p>
     <form action="<?php echo URL?>play/singlePlayerPage">
@@ -160,7 +158,6 @@
         </div>
     </div>
 
-    <!-- Pannello Impostazioni -->
     <div id="settingsPanel" class="settings-panel">
         <div class="settings-header">
             <span>Settings</span>
@@ -168,12 +165,14 @@
         </div>
         <div class="settings-content">
             <h3>Lingua</h3>
-            <select class="dropdown">
-                <option>English</option>
-                <option>Italiano</option>
-                <option>Español</option>
-                <option>Français</option>
-            </select>
+
+            <form action="<?php echo URL?>lingua/cambiaLingua">
+                <select class="dropdown" name="lingua" onchange="this.form.submit()">
+                    <option value="italiano">Italiano</option>
+                    <option value="inglese">English</option>
+                    <option value="spagnolo">Español</option>
+                </select>
+            </form>
 
             <h3 class="mt-4">Audio</h3>
             <div class="radio-group">
@@ -212,10 +211,9 @@
         function closeSettings() {
             document.getElementById("settingsPanel").classList.remove("open");
         }
-        // Funzione per il logout
         function logout() {
-            alert('Logout effettuato!'); // Sostituisci con la logica effettiva di logout
-            closeSettings(); // Chiudi il pannello dopo il logout
+            alert('Logout effettuato!');
+            closeSettings();
         }
     </script>
 </body>

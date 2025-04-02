@@ -7,9 +7,7 @@ class signup{
     }
 
     public function index(){
-        require  'application/views/templates/header.php';
-        require  'application/views/homeNotLogged/index.php';
-        require  'application/views/templates/footer.php';
+        require  'application/views/homeLogged/index.php';
     }
 
     public function signUpManage(){
@@ -20,7 +18,7 @@ class signup{
             $username = $_POST['username'];
             $password = $_POST['password'];
             $passwordConfirm = $_POST['passwordConfirm'];
-            $regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
+            $regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/";
 
             if(empty($password)) {
                 header("Location: " . URL . "signup/form?error=password_empty");

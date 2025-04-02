@@ -205,6 +205,7 @@
     let primoAccesso = true;
     let letteraPrecedentementeSbagliata = false;
     let fraseArray = [];
+    let frase;
     let numeroErrori = 0;
 
     function stampaTesto(lettera){
@@ -212,6 +213,8 @@
             .then(response => response.text())
             .then(data => {
                 if(primoAccesso){
+                    frase = data;
+
                     fraseArray = data.split(""); // Converte la frase in un array di caratteri
                     document.getElementById("frase").innerText = data;
                     primoAccesso = false;
@@ -240,7 +243,7 @@
 
                             document.getElementById('tempo').innerHTML = tempo.toFixed(1)+ " sec";
 
-                            salvaStatistiche(percentualeCorrettezza,velocita,tempo);
+                            salvaStatistiche(percentualeCorrettezza,velocita,tempo,frase);
 
                             tempo = 0;
                             primoTastoPremuto = false;
@@ -269,11 +272,12 @@
         tempo += 0.1;
     }
 
-    function salvaStatistiche(percentualeCorrettezza,velocita,tempo){
+    function salvaStatistiche(percentualeCorrettezza,velocita,tempo,frase){
         const dati = {
             accuratezza: percentualeCorrettezza,
             velocita: velocita,
-            tempo: tempo
+            tempo: tempo,
+            frase: frase
         };
 
         fetch('../../php_mvc/application/controller/save.php', {

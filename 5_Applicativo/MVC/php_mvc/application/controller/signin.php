@@ -1,14 +1,14 @@
 <?php
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 class signin{
     public function __construct(){
         require_once 'application/models/UserMapper.php';
     }
 
     public function index(){
-        require  'application/views/templates/header.php';
         require  'application/views/homeNotLogged/index.php';
-        require  'application/views/templates/footer.php';
     }
 
     public function signInManage(){

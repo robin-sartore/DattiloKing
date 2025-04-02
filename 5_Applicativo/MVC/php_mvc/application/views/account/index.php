@@ -154,7 +154,7 @@
         var username = document.getElementById("username").value;
         var password = document.getElementById("password").value;
         var passwordConfirm = document.getElementById("passwordConfirm").value;
-        var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/;
 
         if (!password) {
             alert("La password non può essere vuota!");

@@ -1,4 +1,7 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require_once 'User.php';
 class UserMapper{
 
@@ -32,6 +35,7 @@ class UserMapper{
         foreach ($utenti as $utente) {
             if($utente['username'] == $username){
                 if(password_verify($password, $utente['password'])){
+                    $_SESSION['username'] = $utente['username'];
                     $_SESSION['logged'] = true;
                     return true;
                 }
@@ -43,42 +47,47 @@ class UserMapper{
 
 
     public function getPhraseModel() {
-        $result = $this->connection->query("SELECT COUNT(*) as total FROM frase");
+        $result = $this->connection->prepare("SELECT COUNT(*) as total FROM frase WHERE lingua = ?");
+        $result->bindParam(1,$_SESSION['lingua']);
+        $result->execute();
         $row = $result->fetch(PDO::FETCH_ASSOC);
         $totalRow = $row['total'];
 
         if ($totalRow <= 0) {
             return "Nessun dato presente nel DB";
         }
-        
+
         $casual = rand(0, $totalRow - 1);
 
-        $query = "SELECT testo FROM frase LIMIT 1 OFFSET ?";
+        $query = "SELECT testo FROM frase WHERE lingua = ? LIMIT 1 OFFSET ?";
         $frase = $this->connection->prepare($query);
-        $frase->bindParam(1, $casual, PDO::PARAM_INT);
+        $frase->bindParam(1, $_SESSION['lingua']);
+        $frase->bindParam(2, $casual, PDO::PARAM_INT);
         $frase->execute();
 
         $result = $frase->fetch(PDO::FETCH_ASSOC);
 
-        if ($result) {
+        if($result){
             return $result['testo'];
-        } else {
+        }else{
             return "Nessuna frase trovata";
         }
     }
 
-    public function saveStatsModel($accuratezza,$velocita,$tempo){
+    public function saveStatsModel($accuratezza,$velocita,$tempo,$username,$frase){
         //$pdoQueryTurno = $this->connection->prepare('SELECT MAX(turno) from turno_storico');
         //$ultimoTurnoUtente = $pdoQueryTurno->execute();
         //$numeroTurno = $ultimoTurnoUtente+1;
 
         // Aggiungere tutti i campi della tabella una volta che verrà incorporato il login in questo MVC
-        $pdoQuerySalvataggio = $this->connection->prepare('INSERT INTO turno_storico(accuratezza, velocita, tempo, data) VALUES (?, ?, ?, ?)');
+        $pdoQuerySalvataggio = $this->connection->prepare('INSERT INTO turno_storico(accuratezza, velocita, tempo, data, utente_username, frase_testo) VALUES (?, ?, ?, ?, ?,?)');
         $pdoQuerySalvataggio->bindParam(1, $accuratezza);
         $pdoQuerySalvataggio->bindParam(2, $velocita);
         $pdoQuerySalvataggio->bindParam(3, $tempo);
         $dataAttuale = date('Y-m-d');
         $pdoQuerySalvataggio->bindParam(4, $dataAttuale);
+        $pdoQuerySalvataggio->bindParam(5, $username);
+        $pdoQuerySalvataggio->bindParam(6, $frase);
 
         $executed = $pdoQuerySalvataggio->execute();
 
