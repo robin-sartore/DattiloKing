@@ -132,80 +132,148 @@
     </style>
 </head>
 <body>
-    <div class="container d-flex flex-column justify-content-center align-items-center vh-100">
-        <div class="sett" onclick="openSettings()">
-            <img src="<?php echo URL?>application/views/images/settings.png" alt="Settings">
-        </div>
+<div class="container d-flex flex-column justify-content-center align-items-center vh-100">
+    <div class="sett" onclick="openSettings()">
+        <img src="<?php echo URL?>application/views/images/settings.png" alt="Settings">
+    </div>
 
-        <h1 class="title">Dattilo King</h1>
-        <p class="subtitle">The best way to learn to write fast</p>
-        <form action="<?php echo URL?>play/singlePlayerPage" >
-            <button class="btn btn-custom">Single player</button>
+    <h1 class="title">Dattilo King</h1>
+    <p class="subtitle">The best way to learn to write fast</p>
+    <form action="<?php echo URL ?>play/singlePlayerPage">
+        <button class="btn btn-custom">Single player</button>
+    </form>
+    <button class="btn btn-custom" disabled>Multi player</button>
+    <div class="d-flex gap-3 mt-3">
+        <form action="<?php echo URL?>account/accountPage" onsubmit="saveAudioProgress()">
+            <button class="btn btn-custom" style="width: 300px;">Sign In/Up</button>
         </form>
-        <button class="btn btn-custom" disabled>Multi player</button>
-        <div class="d-flex gap-3 mt-3">
-            <form action="<?php echo URL?>account/accountPage">
-                <button class="btn btn-custom" style="width: 300px;">Sign In/Up</button>
-            </form>
-            <!--<input class="btn btn-custom" type="submit" value="Sign In">
-            <input class="btn btn-custom" type="submit" value="Sign Up"> -->
-        </div>
+        <!--<input class="btn btn-custom" type="submit" value="Sign In">
+        <input class="btn btn-custom" type="submit" value="Sign Up"> -->
     </div>
+</div>
 
-    <!-- Pannello Impostazioni -->
-    <div id="settingsPanel" class="settings-panel">
-        <div class="settings-header">
-            <span>Settings</span>
-            <span class="close-btn" onclick="closeSettings()">×</span>
+<!-- Pannello Impostazioni -->
+<div id="settingsPanel" class="settings-panel">
+    <div class="settings-header">
+        <span>Settings</span>
+        <span class="close-btn" onclick="closeSettings()">×</span>
+    </div>
+    <div class="settings-content">
+        <h3>Lingua</h3>
+        <select class="dropdown">
+            <option>English</option>
+            <option>Italiano</option>
+            <option>Español</option>
+            <option>Français</option>
+        </select>
+
+        <h3 class="mt-4">Audio</h3>
+        <div class="radio-group">
+            <label><input type="radio" name="audio" value="on" id="radio-on"> On</label>
+            <label><input type="radio" name="audio" value="off" id="radio-off"> Off</label>
         </div>
-        <div class="settings-content">
-            <h3>Lingua</h3>
-            <select class="dropdown">
-                <option>English</option>
-                <option>Italiano</option>
-                <option>Español</option>
-                <option>Français</option>
-            </select>
-
-            <h3 class="mt-4">Audio</h3>
-            <div class="radio-group">
-                <label><input type="radio" name="audio" checked> On</label>
-                <label><input type="radio" name="audio"> Off</label>
-            </div>
+        <br>
+        <br>
+        <div>
+            <a href="<?php echo URL?>home/openTutorial">
+                <button>Tutorial</button>
+            </a>
             <br>
             <br>
-            <div>
-                <a href="<?php echo URL?>home/openTutorial">
-                    <button>Tutorial</button>
-                </a>
-                <br>
-                <br>
-            </div>
         </div>
     </div>
+</div>
 
-    <script>
-        function openSettings() {
-            document.getElementById("settingsPanel").classList.add("open");
-        }
+<audio id="background-audio" loop>
+    <source src='<?php echo URL?>application/views/audio/audio.mp3' type="audio/mpeg">
+    Il tuo browser non supporta l'audio.
+</audio>
 
-        function closeSettings() {
-            document.getElementById("settingsPanel").classList.remove("open");
-        }
+<script>
+    let audio = document.getElementById("background-audio");
 
-        // Funzione per il logout
-        function logout() {
-            alert('Logout effettuato!'); // Sostituisci con la logica effettiva di logout
-            closeSettings(); // Chiudi il pannello dopo il logout
-        }
+    // Funzione per avviare o fermare l'audio in base alla selezione del radiobutton
+    function updateAudio() {
 
-        // Funzione per eliminare l'account
-        function deleteAccount() {
-            if (confirm('Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile.')) {
-                alert('Account eliminato!'); // Sostituisci con la logica effettiva di eliminazione
-                closeSettings(); // Chiudi il pannello dopo l'eliminazione
+        // Se "on" è selezionato, avvia la riproduzione dell'audio
+        if (document.getElementById("radio-on").checked === true) {
+            if (localStorage.length === 0){
+                audio.play()
+                    .catch(error => console.error("Errore durante la riproduzione:", error));
             }
+            else {
+                const savedTime = localStorage.getItem("audioTime");
+                localStorage.removeItem("audioTime");
+                audio.currentTime = parseFloat(savedTime);
+                audio.play().catch(error => console.error("Errore durante la riproduzione:", error));
+            }
+        } else {
+            audio.pause();
         }
-    </script>
+    }
+
+    // Aggiunge l'evento "change" a tutti i radiobutton per rilevare cambiamenti
+    const radioButtons = document.querySelectorAll('input[name="audio"]'); // Seleziona tutti i radiobutton con name="audio"
+    radioButtons.forEach(radio => {
+        radio.addEventListener("change", updateAudio); // Collega l'evento "change" alla funzione updateAudio
+    });
+
+    // Al caricamento della pagina esegue la funzione
+    window.onload = () => {
+        console.log(localStorage.length)
+        if (localStorage.length === 0){
+            document.getElementById("radio-on").checked = true;
+            updateAudio();
+        }
+        else {
+            // viene usato JSON.parse per riconvertirlo in un valore booleano
+            const on = JSON.parse(localStorage.getItem("radio-on"));
+            const off = JSON.parse(localStorage.getItem("radio-off"));
+            document.getElementById("radio-on").checked = on;
+            document.getElementById("radio-off").checked = off;
+            updateAudio();
+        }
+    };
+
+    function saveAudioProgress() {
+        // Recupera il valore del radiobutton selezionato
+        const audioStatus = document.querySelector('input[name="audio"]:checked').value;
+
+        // Verifica se l'audio è su "On" e salva i progressi
+        if (audioStatus === "on") {
+            // viene usato JSON.stringify per salvare il valore booleano come stringa
+            localStorage.setItem("radio-on", JSON.stringify(true));
+            localStorage.setItem("radio-off", JSON.stringify(false));
+            localStorage.setItem("audioTime", audio.currentTime); // Salva la posizione attuale
+            console.log("Progressi audio salvati!");
+        } else {
+            localStorage.setItem("radio-off", JSON.stringify(true));
+            localStorage.setItem("radio-on", JSON.stringify(false));
+            console.log("L'audio è spento");
+        }
+    }
+
+    function openSettings() {
+        document.getElementById("settingsPanel").classList.add("open");
+    }
+
+    function closeSettings() {
+        document.getElementById("settingsPanel").classList.remove("open");
+    }
+
+    // Funzione per il logout
+    function logout() {
+        alert('Logout effettuato!'); // Sostituisci con la logica effettiva di logout
+        closeSettings(); // Chiudi il pannello dopo il logout
+    }
+
+    // Funzione per eliminare l'account
+    function deleteAccount() {
+        if (confirm('Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile.')) {
+            alert('Account eliminato!'); // Sostituisci con la logica effettiva di eliminazione
+            closeSettings(); // Chiudi il pannello dopo l'eliminazione
+        }
+    }
+</script>
 </body>
 </html>

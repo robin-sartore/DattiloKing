@@ -69,7 +69,8 @@
 </head>
 <body>
 <div class="sett">
-    <a href="<?php echo URL?>home/notLogged">
+
+    <a href="<?php echo URL?>home/notLogged" onclick="saveAudioProgress()">
         <img src="<?php echo URL?>application/views/images/back.jpg" alt="Back">
     </a>
 </div>
@@ -148,13 +149,33 @@
     </div>
 </div>
 
+<audio id="background-audio" loop>
+    <source src='<?php echo URL?>application/views/audio/audio.mp3' type="audio/mpeg">
+    Il tuo browser non supporta l'audio.
+</audio>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+
+    const audio = document.getElementById("background-audio");
+
+    // Recupera i progressi salvati
+    window.onload = () => {
+        const savedTime = localStorage.getItem("audioTime");
+        localStorage.removeItem("audioTime");
+        audio.currentTime = parseFloat(savedTime);
+        audio.play().catch(error => console.error("Errore durante la riproduzione:", error));
+    };
+
+    function saveAudioProgress() {
+        localStorage.setItem("audioTime", audio.currentTime); // Salva la posizione attuale
+    }
+
     function validateSignUp() {
         var username = document.getElementById("username").value;
         var password = document.getElementById("password").value;
         var passwordConfirm = document.getElementById("passwordConfirm").value;
-        var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/;
+        var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
         if (!password) {
             alert("La password non può essere vuota!");
