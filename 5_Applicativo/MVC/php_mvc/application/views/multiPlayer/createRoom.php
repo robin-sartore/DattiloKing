@@ -1,3 +1,11 @@
+<?php
+// Funzione per generare un codice stanza univoco
+function generaCodiceRoom($length = 6) {
+    return strtoupper(substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, $length));
+}
+
+$codice = generaCodiceRoom();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -178,11 +186,12 @@
     <!-- Se possibile fare che se si clica si copia-->
     <form action="<?php echo URL ?>play/multiPlayerGameRoom" method="POST">
         <p class="subtitle">Code</p>
-        <input class="text-custom" type="text" name="code" disabled value="#Jp6z">
+        <input class="text-custom" type="text" name="code" readonly value="<?php echo $codice ?>">
 
 
         <p class="subtitle">Numero Round</p>
         <input class="text-custom" type="number" name="rounds" required>
+        <input type="hidden" name="creatore" value="<?php echo $_SESSION['username'] ?>">
 
         <p class="subtitle">Giocatori nella stanza:</p>
         <div id="playerContainer" class="player-container">
@@ -193,5 +202,18 @@
         <br>
         <button class="btn btn-custom" type="submit">Start game</button>
     </form>
+    <script>
+        setInterval(() => {
+            fetch('<?php echo URL ?>play/getRoomPlayers?code=<?php echo $codice ?>')
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById('playerContainer');
+                    container.innerHTML = '';
+                    data.forEach(player => {
+                        container.innerHTML += `<div class="player">${player}</div>`;
+                    });
+                });
+        }, 2000);
+    </script>
 </body>
 </html>
