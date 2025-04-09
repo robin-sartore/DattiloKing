@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="155b3dc2-68be-4448-88d5-b9a8a6f20cc2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/php_mvc/application/models/UserMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/models/UserMapper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php_mvc/application/views/account/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/views/account/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php_mvc/application/views/homeNotLogged/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/php_mvc/application/views/homeNotLogged/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,8 +81,8 @@
       <workItem from="1741779958038" duration="9736000" />
       <workItem from="1742975789309" duration="11758000" />
       <workItem from="1743577435104" duration="102000" />
-      <workItem from="1743577539185" duration="18917000" />
-      <workItem from="1744181834150" duration="8452000" />
+      <workItem from="1743577539185" duration="18807000" />
+      <workItem from="1744198799101" duration="627000" />
     </task>
     <servers />
   </component>
