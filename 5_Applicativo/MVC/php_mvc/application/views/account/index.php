@@ -151,7 +151,7 @@
 
 <audio id="background-audio" loop>
     <source src='<?php echo URL?>application/views/audio/audio.mp3' type="audio/mpeg">
-    Il tuo browser non supporta l'audio.
+    Il tuo browser non supporta l'audio
 </audio>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -161,10 +161,12 @@
 
     // Recupera i progressi salvati
     window.onload = () => {
-        const savedTime = localStorage.getItem("audioTime");
-        localStorage.removeItem("audioTime");
-        audio.currentTime = parseFloat(savedTime);
-        audio.play().catch(error => console.error("Errore durante la riproduzione:", error));
+        if (localStorage.getItem("audioTime") !== null) {
+            const savedTime = localStorage.getItem("audioTime");
+            localStorage.removeItem("audioTime");
+            audio.currentTime = parseFloat(savedTime);
+            audio.play().catch(error => console.error("Errore durante la riproduzione:", error));
+        }
     };
 
     function saveAudioProgress() {

@@ -163,8 +163,6 @@
         <select class="dropdown">
             <option>English</option>
             <option>Italiano</option>
-            <option>Español</option>
-            <option>Français</option>
         </select>
 
         <h3 class="mt-4">Audio</h3>
@@ -186,26 +184,27 @@
 
 <audio id="background-audio" loop>
     <source src='<?php echo URL?>application/views/audio/audio.mp3' type="audio/mpeg">
-    Il tuo browser non supporta l'audio.
+    Il tuo browser non supporta l'audio
 </audio>
 
 <script>
     let audio = document.getElementById("background-audio");
+    document.getElementById("radio-on").checked = true;
 
     // Funzione per avviare o fermare l'audio in base alla selezione del radiobutton
     function updateAudio() {
 
         // Se "on" è selezionato, avvia la riproduzione dell'audio
         if (document.getElementById("radio-on").checked === true) {
-            if (localStorage.length === 0){
-                audio.play()
-                    .catch(error => console.error("Errore durante la riproduzione:", error));
-            }
-            else {
+            if (localStorage.getItem("audioTime") !== null){
                 const savedTime = localStorage.getItem("audioTime");
                 localStorage.removeItem("audioTime");
                 audio.currentTime = parseFloat(savedTime);
                 audio.play().catch(error => console.error("Errore durante la riproduzione:", error));
+            }
+            else {
+                audio.play()
+                    .catch(error => console.error("Errore durante la riproduzione:", error));
             }
         } else {
             audio.pause();
@@ -220,20 +219,23 @@
 
     // Al caricamento della pagina esegue la funzione
     window.onload = () => {
-        console.log(localStorage.length)
-        if (localStorage.length === 0){
-            document.getElementById("radio-on").checked = true;
-            updateAudio();
-        }
-        else {
-            // viene usato JSON.parse per riconvertirlo in un valore booleano
+        //localStorage.clear();
+        console.log(localStorage.length);
+        if (localStorage.length !== 0) {
             const on = JSON.parse(localStorage.getItem("radio-on"));
             const off = JSON.parse(localStorage.getItem("radio-off"));
             document.getElementById("radio-on").checked = on;
             document.getElementById("radio-off").checked = off;
-            updateAudio();
         }
+        updateAudio();
+
+        window.addEventListener('click', () => {
+            if (document.getElementById("radio-on").checked) {
+                audio.play().catch(error => console.error("Errore durante la riproduzione:", error));
+            }
+        }, { once: true });
     };
+
 
     function saveAudioProgress() {
         // Recupera il valore del radiobutton selezionato
@@ -245,7 +247,7 @@
             localStorage.setItem("radio-on", JSON.stringify(true));
             localStorage.setItem("radio-off", JSON.stringify(false));
             localStorage.setItem("audioTime", audio.currentTime); // Salva la posizione attuale
-            console.log("Progressi audio salvati!");
+            console.log("Progressi audio salvati");
         } else {
             localStorage.setItem("radio-off", JSON.stringify(true));
             localStorage.setItem("radio-on", JSON.stringify(false));
