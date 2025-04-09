@@ -26,6 +26,8 @@ class UserMapper{
         $salvataggioUtente->bindParam(1, $username);
         $salvataggioUtente->bindParam(2, $hashedPassword);
         $salvataggioUtente->execute();
+        $_SESSION['username'] = $utente['username'];
+        $_SESSION['logged'] = true;
         return true;
     }
 
@@ -75,12 +77,17 @@ class UserMapper{
     }
 
     public function saveStatsModel($accuratezza,$velocita,$tempo,$username,$frase){
-        //$pdoQueryTurno = $this->connection->prepare('SELECT MAX(turno) from turno_storico');
-        //$ultimoTurnoUtente = $pdoQueryTurno->execute();
-        //$numeroTurno = $ultimoTurnoUtente+1;
+        $pdoQueryTurno = $this->connection->prepare('SELECT MAX(numero) FROM turno_storico WHERE utente_username = ?');
+        $pdoQueryTurno->bindParam(1,$username);
+        $pdoQueryTurno->execute();
+        $ultimoTurnoUtente = $pdoQueryTurno->fetchColumn();
+        if ($ultimoTurnoUtente !== false) {
+            $turno = $ultimoTurnoUtente + 1;
+        } else {
+            $turno = 0;
+        }
 
-        // Aggiungere tutti i campi della tabella una volta che verrà incorporato il login in questo MVC
-        $pdoQuerySalvataggio = $this->connection->prepare('INSERT INTO turno_storico(accuratezza, velocita, tempo, data, utente_username, frase_testo) VALUES (?, ?, ?, ?, ?,?)');
+        $pdoQuerySalvataggio = $this->connection->prepare('INSERT INTO turno_storico(accuratezza, velocita, tempo, data, utente_username, frase_testo, numero) VALUES (?, ?, ?, ?, ?,?,?)');
         $pdoQuerySalvataggio->bindParam(1, $accuratezza);
         $pdoQuerySalvataggio->bindParam(2, $velocita);
         $pdoQuerySalvataggio->bindParam(3, $tempo);
@@ -88,12 +95,13 @@ class UserMapper{
         $pdoQuerySalvataggio->bindParam(4, $dataAttuale);
         $pdoQuerySalvataggio->bindParam(5, $username);
         $pdoQuerySalvataggio->bindParam(6, $frase);
+        $pdoQuerySalvataggio->bindParam(7, $turno);
 
         $executed = $pdoQuerySalvataggio->execute();
 
         if($executed && $pdoQuerySalvataggio->rowCount() > 0){
             return true;
-        }else{
+        }else {
             return false;
         }
     }
