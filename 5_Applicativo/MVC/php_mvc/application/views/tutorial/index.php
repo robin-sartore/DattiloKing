@@ -22,8 +22,8 @@
             margin-bottom: 20px; /* Spazio sotto il titolo */
         }
         .subtitle {
-            font-size: 1.5rem; /* Riduci la dimensione del testo */
-            text-align: justify;
+            font-size: 1.3rem; /* Riduci la dimensione del testo */
+            text-align: center;
             max-width: 800px; /* Limita la larghezza del testo */
             margin: 0 auto; /* Centra il testo */
             padding: 0 20px; /* Aggiunge padding laterale */
@@ -151,10 +151,17 @@
 <!-- Contenuto principale -->
 <div class="container">
     <h1 class="title">Tutorial</h1>
-    <p class="subtitle">DatiloKing è un sito di dattilografia, tecnica di scrittura con tastiera.</p>
-    <p class="subtitle">Si può usare da solo cliccando sul bottone SinglePlayer, apparirà una frase casuale e scrivendo con la tastiera si colorerà di verde se si avrà scritto giusto e di rosso se sbagli. Una volta finita una frase ne apparirà un'altra e quando si vuole uscire basta cliccare la freccia per tornare alla home e le statistiche verranno salvate fino alla frase precedente. Una volta nella home si possono vedere le proprie statistiche cliccando sul tasto del profilo raffigurante un mezzo busto.</p>
-    <p class="subtitle">Solo se si è loggati si potrà accedere alla modalità multiplayer cliccando sul tasto. Questa modalità ti permette di giocare contro i tuoi amici per vedere chi tra voi sia il miglior dattilografo. Un giocatore può creare una stanza cliccando sul tasto "Crea Stanza" e potrà condividere il codice che gli altri player useranno per entrare nella stanza cliccando il tasto "Unisciti". Il giocatore che ha avviato la stanza sceglierà il numero di round e avvierà la partita. A ogni round i giocatori vedranno la stessa frase e dovranno riscriverla il più velocemente possibile. Alla fine della partita si vedrà una classifica con le varie statistiche di ogni player e chi ha vinto.</p>
-    <p class="subtitle">Nella Home cliccando il tasto delle impostazioni si potrà selezionare la lingua e gestire il volume del suono. In più, potrai eseguire il logout o eliminare l'account e tutti i dati salvati.</p>
+    <p class="subtitle">DatiloKing è una piattaforma dedicata alla dattilografia, ovvero la tecnica di scrittura tramite tastiera.</p>
+    <br>
+    <p class="subtitle">Nella modalità <b>Single Player</b>, accessibile cliccando sull'apposito pulsante, verrà mostrata una frase casuale da digitare. Durante la scrittura, il testo si colorerà di verde per ogni parola corretta e di rosso per eventuali errori. Una volta completata la frase, ne comparirà automaticamente un’altra. Per uscire dalla modalità, è sufficiente cliccare sulla freccia per tornare alla home: in questo modo, le statistiche verranno salvate fino all’ultima frase completata.</p>
+    <br>
+    <p class="subtitle">Dalla home, è possibile visualizzare le proprie statistiche cliccando sull’icona del profilo, rappresentata da un mezzo busto.</p>
+    <br>
+    <p class="subtitle">Se si è effettuato il login, si potrà accedere alla modalità Multiplayer, selezionabile tramite l’apposito tasto. In questa modalità è possibile sfidare i propri amici per determinare chi sia il miglior dattilografo.</p>
+    <br>
+    <p class="subtitle">Un giocatore può creare una stanza cliccando su “Crea Stanza” e condividere il codice univoco con gli altri partecipanti, i quali potranno unirsi cliccando su “Unisciti”. Il creatore della stanza potrà scegliere il numero di round e avviare la partita. In ogni round, tutti i giocatori vedranno la stessa frase e dovranno riscriverla il più rapidamente e correttamente possibile. Al termine della sfida, verrà mostrata una classifica finale con le statistiche dettagliate di ciascun partecipante e il nome del vincitore.</p>
+    <br>
+    <p class="subtitle">Dalla Home, cliccando sull’icona delle impostazioni, si potrà selezionare la lingua dell’interfaccia, regolare il volume dei suoni, effettuare il logout oppure eliminare l’account e tutti i dati salvati.</p>
 </div>
 
 </body>
