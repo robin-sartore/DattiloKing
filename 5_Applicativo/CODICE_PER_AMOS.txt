@@ -1,0 +1,27 @@
+Devi mettere questa parte di codice in views/singlePlayerFrontend/index.php
+
+
+
+.sett {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+        }
+        .sett img {
+            width: 50px;
+        }    
+
+<?php if (isset($_SESSION['logged'])): ?>
+        <div class="sett">
+            <a href="<?php echo URL ?>home/logged" onclick="saveAudioProgress()">
+                <img src="<?php echo URL ?>application/views/images/back.jpg" alt="Back">
+            </a>
+        </div>
+    <?php else: ?>
+        <div class="sett">
+            <a href="<?php echo URL ?>home/notLogged" onclick="saveAudioProgress()">
+                <img src="<?php echo URL ?>application/views/images/back.jpg" alt="Back">
+            </a>
+        </div>
+    <?php endif; ?>
