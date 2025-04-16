@@ -161,8 +161,9 @@
     <div class="settings-content">
         <h3>Lingua</h3>
         <select class="dropdown">
-            <option>English</option>
             <option>Italiano</option>
+            <option>English</option>
+            <option>Español</option>
         </select>
 
         <h3 class="mt-4">Audio</h3>

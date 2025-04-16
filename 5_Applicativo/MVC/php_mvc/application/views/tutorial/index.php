@@ -141,11 +141,19 @@
 <body>
 <!-- Pulsanti in alto -->
 <div class="top-buttons">
-    <div class="sett">
-        <a href="<?php echo URL?>home/logged">
-            <img src="<?php echo URL?>application/views/images/back.jpg" alt="Back">
-        </a>
-    </div>
+    <?php if (isset($_SESSION['logged'])): ?>
+        <div class="sett">
+            <a href="<?php echo URL ?>home/logged" onclick="saveAudioProgress()">
+                <img src="<?php echo URL ?>application/views/images/back.jpg" alt="Back">
+            </a>
+        </div>
+    <?php else: ?>
+        <div class="sett">
+            <a href="<?php echo URL ?>home/notLogged" onclick="saveAudioProgress()">
+                <img src="<?php echo URL ?>application/views/images/back.jpg" alt="Back">
+            </a>
+        </div>
+    <?php endif; ?>
 </div>
 
 <!-- Contenuto principale -->

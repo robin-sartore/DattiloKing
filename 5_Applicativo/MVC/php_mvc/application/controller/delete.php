@@ -10,6 +10,7 @@ class delete
         $salvataggioUtente = $this->connection->prepare('DELETE FROM utente where username=(?)');
         $salvataggioUtente->bindParam(1, $_SESSION['username']);//implementare session username
         $salvataggioUtente->execute();
+        require_once 'application/views/homeNotLogged/index.php';
     }
 
 

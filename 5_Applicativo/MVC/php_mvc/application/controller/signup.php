@@ -7,7 +7,7 @@ class signup{
     }
 
     public function index(){
-        require  'application/views/homeLogged/index.php';
+        require  'application/views/account/index.php';
     }
 
     public function signUpManage(){
@@ -21,17 +21,14 @@ class signup{
             $regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/";
 
             if(empty($password)) {
-                header("Location: " . URL . "signup/form?error=password_empty");
                 exit;
             }
 
             if(!preg_match($regex, $password)) {
-                header("Location: " . URL . "signup/form?error=password_invalid");
                 exit;
             }
 
             if($password !== $passwordConfirm) {
-                header("Location: " . URL . "signup/form?error=password_mismatch");
                 exit;
             }
 
@@ -42,11 +39,10 @@ class signup{
                 header("Location: " . URL . "signup/form?error=user_exists");
                 exit;
             } else {
-                header("Location: " . URL . "signup/form?success=registered");
+                header("Location: " . URL . "home/logged");
                 exit;
             }
         } else {
-            header("Location: " . URL . "signup/form?error=missing_fields");
             exit;
         }
     }

@@ -80,44 +80,6 @@
 
     <div class="card shadow mt-3">
         <h3 class="mb-3 fw-bold" style="font-size: 2rem;">Login Type</h3>
-        <?php if(isset($_GET['error'])): ?>
-            <div class="alert alert-danger">
-                <?php
-                switch($_GET['error']) {
-                    // Errori per il login
-                    case 'missing_fields':
-                        echo "Inserisci username e password!";
-                        break;
-                    case 'invalid_credentials':
-                        echo "Username o password errati!";
-                        break;
-
-                    // Errori per la registrazione
-                    case 'password_empty':
-                        echo "La password non può essere vuota!";
-                        break;
-                    case 'password_invalid':
-                        echo "La password non rispetta i requisiti!";
-                        break;
-                    case 'password_mismatch':
-                        echo "Le password non coincidono!";
-                        break;
-                    case 'user_exists':
-                        echo "L'utente esiste già!";
-                        break;
-
-                    default:
-                        echo "Errore sconosciuto!";
-                }
-                ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if(isset($_GET['success']) && $_GET['success'] === 'registered'): ?>
-            <div class="alert alert-success">
-                Registrazione avvenuta con successo!
-            </div>
-        <?php endif; ?>
 
 
         <ul class="nav nav-pills nav-fill mb-3" id="pills-tab" role="tablist">
@@ -139,19 +101,19 @@
             </div>
             <div class="tab-pane fade" id="sign-up" role="tabpanel">
                 <form id="signup-form" action="<?php echo URL?>signup/signUpManage" method="POST" onsubmit="return validateSignUp();">
-                    <input type="text" class="form-control mb-3" placeholder="Username" name="username" id="username">
-                    <input type="password" class="form-control mb-3" placeholder="Password" name="password" id="password">
-                    <input type="password" class="form-control mb-3" placeholder="Confirm Password" name="passwordConfirm" id="passwordConfirm">
+                    <input type="text" class="form-control mb-3" placeholder="Username" name="username" id="signup-username">
+                    <input type="password" class="form-control mb-3" placeholder="Password" name="password" id="signup-password">
+                    <input type="password" class="form-control mb-3" placeholder="Confirm Password" name="passwordConfirm" id="signup-passwordConfirm">
                     <input class="btn btn-dark w-100" type="submit" value="SIGN UP">
                 </form>
             </div>
-        </div>
+        </div> <br>
+        <div id="errors"></div>
     </div>
 </div>
 
 <audio id="background-audio" loop>
     <source src='<?php echo URL?>application/views/audio/audio.mp3' type="audio/mpeg">
-    Il tuo browser non supporta l'audio
 </audio>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -174,28 +136,40 @@
     }
 
     function validateSignUp() {
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
-        var passwordConfirm = document.getElementById("passwordConfirm").value;
+        var username = document.getElementById("signup-username").value.trim();
+        var password = document.getElementById("signup-password").value.trim();
+        var passwordConfirm = document.getElementById("signup-passwordConfirm").value.trim();
         var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/;
 
-        if (!password) {
-            alert("La password non può essere vuota!");
+        <?php if(isset($_GET['error'])): ?>
+            <?php if($_GET['error'] === 'user_exists'): ?>
+                document.getElementById("errors").innerHTML = "L'utente esiste già!";
+                return false;
+            <?php endif; ?>
+        <?php endif; ?>
+
+        if (!username && !password) {
+            document.getElementById("errors").innerHTML = "Inserisci username e password!";
             return false;
         }
 
         if(!username){
-            alert("Lo username non può essere vuoto!");
+            document.getElementById("errors").innerHTML = "Lo username non può essere vuoto!";
+            return false;
+        }
+
+        if (!password) {
+            document.getElementById("errors").innerHTML = "La password non può essere vuota!";
             return false;
         }
 
         if (!regex.test(password)) {
-            alert("La password deve rispettare:\n- Almeno una lettera maiuscola\n- Almeno una lettera minuscola\n- Almeno un numero\n- Almeno un carattere speciale\n- Almeno 8 caratteri di lunghezza");
+            document.getElementById("errors").innerHTML = "La password deve rispettare:\n- Almeno una lettera maiuscola\n- Almeno una lettera minuscola\n- Almeno un numero\n- Almeno un carattere speciale\n- Almeno 8 caratteri di lunghezza";
             return false;
         }
 
         if (password !== passwordConfirm) {
-            alert("Le password non coincidono!");
+            document.getElementById("errors").innerHTML = "Le password non coincidono!";
             return false;
         }
 
@@ -205,8 +179,18 @@
         var username = document.getElementById("signin-username").value.trim();
         var password = document.getElementById("signin-password").value.trim();
 
-        if (!username || !password) {
-            alert("Inserisci username e password!");
+        if (!username && !password) {
+            document.getElementById("errors").innerHTML = "Inserisci username e password!";
+            return false;
+        }
+
+        if(!username){
+            document.getElementById("errors").innerHTML = "Lo username non può essere vuoto!";
+            return false;
+        }
+
+        if (!password) {
+            document.getElementById("errors").innerHTML = "La password non può essere vuota!";
             return false;
         }
 
