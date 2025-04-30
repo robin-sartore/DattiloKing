@@ -142,10 +142,10 @@
         var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/;
 
         <?php if(isset($_GET['error'])): ?>
-            <?php if($_GET['error'] === 'user_exists'): ?>
-                document.getElementById("errors").innerHTML = "L'utente esiste già!";
-                return false;
-            <?php endif; ?>
+        <?php if($_GET['error'] === 'user_exists'): ?>
+        document.getElementById("errors").innerHTML = "L'utente esiste già!";
+        return false;
+        <?php endif; ?>
         <?php endif; ?>
 
         if (!username && !password) {

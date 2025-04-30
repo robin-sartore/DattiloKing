@@ -75,9 +75,33 @@
             padding: 20px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
         }
+        .sett {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+        }
+        .sett img {
+            width: 50px;
+        }
+
+
 
     </style>
 </head>
+<?php if (isset($_SESSION['logged'])): ?>
+    <div class="sett">
+        <a href="<?php echo URL ?>home/logged" onclick="saveAudioProgress()">
+            <img src="<?php echo URL ?>application/views/images/back.jpg" alt="Back">
+        </a>
+    </div>
+<?php else: ?>
+    <div class="sett">
+        <a href="<?php echo URL ?>home/notLogged" onclick="saveAudioProgress()">
+            <img src="<?php echo URL ?>application/views/images/back.jpg" alt="Back">
+        </a>
+    </div>
+<?php endif; ?>
 <body onload="stampaTesto()">
 
 <div class="sidebar">

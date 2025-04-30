@@ -53,7 +53,16 @@
             color: black;
             margin-bottom: 3%;
         }
-
+        .player {
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .creator {
+            color: yellow;
+        }
         .sett {
             position: absolute;
             top: 20px;
@@ -67,8 +76,9 @@
 </head>
 <body>
 <?php
-session_start();
-$code = isset($_SESSION["code"]) ? $_SESSION["code"] : "Non specificato";$code = isset($_SESSION["code"]) ? $_SESSION["code"] : "Non specificato";
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}$code = isset($_SESSION["code"]) ? $_SESSION["code"] : "Non specificato";
 ?>
 <div class="container mt-5 text-center">
     <div class="sett">
@@ -80,24 +90,45 @@ $code = isset($_SESSION["code"]) ? $_SESSION["code"] : "Non specificato";$code =
     <div class="profile-container mt-4">
         <div class="profile-box">
             <h2>Lista Utenti</h2>
-            <p><strong>1. AB (Tu)</strong></p>
-            <p><strong>2. AC</strong></p>
-            <p><strong>3. AD</strong></p>
-            <p><strong>4. AE</strong></p>
-            <p><strong>5. AF</strong></p>
-            <!--<table style="border: 1px solid">-->
-            <!--    --><?php //foreach ($users as $user): ?>
-            <!--    <tr>-->
-            <!--        <td>--><?php //echo $user->getUsername()?><!--</td>-->
-            <!--        <td>--><?php //echo $user->getPassword()?><!--</td>-->
-            <!--        <td>--><?php //echo $user->getCognome()?><!--</td>-->
-            <!--    </tr>-->
-            <!--    --><?php //endforeach;?>
-            <!--</table>-->
+            <div id="playerContainer">
+                <!-- I giocatori verranno inseriti qui dinamicamente -->
+            </div>
             <br>
             <h4>Codice stanza: <?php echo $code; ?></h4>
         </div>
     </div>
 </div>
+<script>
+    // Passa il valore di $_SESSION['username'] a una variabile JavaScript
+    const currentUsername = '<?php echo $_SESSION['username']; ?>';
+
+    setInterval(() => {
+        fetch('<?php echo URL ?>play/getRoomPlayers?code=<?php echo $code ?>')
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('playerContainer');
+                container.innerHTML = '';
+                const creator = data.creator; // Recupera il nome del creatore
+                data.players.forEach(player => {
+                    const playerDiv = document.createElement('div');
+                    playerDiv.className = 'player';
+
+                    // Confronta la variabile JavaScript currentUsername
+                    if (player === currentUsername) {
+                        playerDiv.textContent = player + " (TU)";
+                    } else {
+                        playerDiv.textContent = player;
+                    }
+
+                    // Evidenzia il nome del creatore in giallo
+                    if (player === creator) {
+                        playerDiv.className += ' creator';
+                    }
+
+                    container.appendChild(playerDiv);
+                });
+            });
+    }, 2000);
+</script>
 </body>
 </html>

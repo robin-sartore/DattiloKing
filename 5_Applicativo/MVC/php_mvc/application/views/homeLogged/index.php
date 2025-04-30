@@ -12,7 +12,6 @@
             color: white;
             text-align: center;
             font-family: 'Lalezar', cursive;
-            margin: 0;
         }
         .title {
             font-size: 10rem;
@@ -39,16 +38,6 @@
         .btn-custom:hover {
             background: rgba(255, 255, 255, 0.4);
         }
-        .sett {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            cursor: pointer;
-        }
-        .sett img {
-            width: 50px;
-        }
-
         /* Pannello Impostazioni */
         .settings-panel {
             position: fixed;
@@ -123,7 +112,7 @@
         }
 
         .btn-home img {
-            width: 50px;
+            width: 50px; /* Regola la dimensione dell'icona */
             height: auto;
             transition: opacity 0.3s;
         }
@@ -131,7 +120,15 @@
         .btn-home:hover img {
             opacity: 0.7;
         }
-
+        .sett {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+        }
+        .sett img {
+            width: 50px;
+        }
     </style>
 </head>
 <body>
@@ -141,14 +138,13 @@
     </div>
 
     <h1 class="title">Dattilo King</h1>
-    <p class="subtitle">The best way to learn to write fast</p>
-    <form action="<?php echo URL?>play/singlePlayerPage">
+    <p class="subtitle">Type at lightning speed, like a true king!</p>
+    <form action="<?php echo URL ?>play/singlePlayerPage">
         <button class="btn btn-custom">Single player</button>
     </form>
     <form action="<?php echo URL?>play/multiPlayerStarterPage">
         <button class="btn btn-custom">Multi player</button>
-    </form>
-    <div class="d-flex gap-3 mt-3">
+    </form>    <div class="d-flex gap-3 mt-3">
         <div class="d-flex gap-3 mt-3">
             <button class="btn-home">
                 <a href="<?php echo URL?>profile/profilePage">
@@ -158,63 +154,146 @@
         </div>
     </div>
 
-    <div id="settingsPanel" class="settings-panel">
-        <div class="settings-header">
-            <span>Settings</span>
-            <span class="close-btn" onclick="closeSettings()">×</span>
+<!-- Pannello Impostazioni -->
+<div id="settingsPanel" class="settings-panel">
+    <div class="settings-header">
+        <span>Settings</span>
+        <span class="close-btn" onclick="closeSettings()">×</span>
+    </div>
+    <div class="settings-content">
+        <h3>Lingua</h3>
+
+        <form action="<?php echo URL?>lingua/cambiaLingua">
+            <select class="dropdown" name="lingua" onchange="this.form.submit()">
+                <option value="italiano">Italiano</option>
+                <option value="inglese">English</option>
+                <option value="spagnolo">Español</option>
+            </select>
+        </form>
+
+        <h3 class="mt-4">Audio</h3>
+        <div class="radio-group">
+            <label><input type="radio" name="audio" value="on" id="radio-on"> On</label>
+            <label><input type="radio" name="audio" value="off" id="radio-off"> Off</label>
         </div>
-        <div class="settings-content">
-            <h3>Lingua</h3>
-
-            <form action="<?php echo URL?>lingua/cambiaLingua">
-                <select class="dropdown" name="lingua" onchange="this.form.submit()">
-                    <option value="italiano">Italiano</option>
-                    <option value="inglese">English</option>
-                    <option value="spagnolo">Español</option>
-                </select>
-            </form>
-
-            <h3 class="mt-4">Audio</h3>
-            <div class="radio-group">
-                <label><input type="radio" name="audio" checked> On</label>
-                <label><input type="radio" name="audio"> Off</label>
-            </div>
+        <br>
+        <br>
+        <div>
+            <a href="<?php echo URL?>home/openTutorial">
+                <button>Tutorial</button>
+            </a>
             <br>
             <br>
-            <div>
-                <a href="<?php echo URL?>home/openTutorial">
-                    <button>Tutorial</button>
-                </a>
-                <br>
-                <br>
-            </div>
-            <div>
-                <a href="<?php echo URL?>logout/logout">
-                    <button>Log Out</button>
-                </a>
-                <br>
-                <br>
-            </div>
-            <div>
-                <a href="<?php echo URL?>delete/deleteUser">
-                    <button>Delete Account</button>
-                </a>
-            </div>
+        </div>
+        <div>
+            <a href="<?php echo URL?>logout/logout">
+                <button>Log Out</button>
+            </a>
+            <br>
+            <br>
+        </div>
+        <div>
+            <a href="<?php echo URL?>delete/deleteUser">
+                <button>Delete Account</button>
+            </a>
         </div>
     </div>
+</div>
 
-    <script>
-        function openSettings() {
-            document.getElementById("settingsPanel").classList.add("open");
-        }
+<audio id="background-audio" loop>
+    <source src='<?php echo URL?>application/views/audio/audio.mp3' type="audio/mpeg">
+    Il tuo browser non supporta l'audio
+</audio>
 
-        function closeSettings() {
-            document.getElementById("settingsPanel").classList.remove("open");
+<script>
+    let audio = document.getElementById("background-audio");
+    document.getElementById("radio-on").checked = true;
+
+    // Funzione per avviare o fermare l'audio in base alla selezione del radiobutton
+    function updateAudio() {
+
+        // Se "on" è selezionato, avvia la riproduzione dell'audio
+        if (document.getElementById("radio-on").checked === true) {
+            if (localStorage.getItem("audioTime") !== null){
+                const savedTime = localStorage.getItem("audioTime");
+                localStorage.removeItem("audioTime");
+                audio.currentTime = parseFloat(savedTime);
+                audio.play().catch(error => console.error("Errore durante la riproduzione:", error));
+            }
+            else {
+                audio.play()
+                    .catch(error => console.error("Errore durante la riproduzione:", error));
+            }
+        } else {
+            audio.pause();
         }
-        function logout() {
-            alert('Logout effettuato!');
-            closeSettings();
+    }
+
+    // Aggiunge l'evento "change" a tutti i radiobutton per rilevare cambiamenti
+    const radioButtons = document.querySelectorAll('input[name="audio"]'); // Seleziona tutti i radiobutton con name="audio"
+    radioButtons.forEach(radio => {
+        radio.addEventListener("change", updateAudio); // Collega l'evento "change" alla funzione updateAudio
+    });
+
+    // Al caricamento della pagina esegue la funzione
+    window.onload = () => {
+        //localStorage.clear();
+        console.log(localStorage.length);
+        if (localStorage.length !== 0) {
+            const on = JSON.parse(localStorage.getItem("radio-on"));
+            const off = JSON.parse(localStorage.getItem("radio-off"));
+            document.getElementById("radio-on").checked = on;
+            document.getElementById("radio-off").checked = off;
         }
-    </script>
+        updateAudio();
+
+        window.addEventListener('click', () => {
+            if (document.getElementById("radio-on").checked) {
+                audio.play().catch(error => console.error("Errore durante la riproduzione:", error));
+            }
+        }, { once: true });
+    };
+
+
+    function saveAudioProgress() {
+        // Recupera il valore del radiobutton selezionato
+        const audioStatus = document.querySelector('input[name="audio"]:checked').value;
+
+        // Verifica se l'audio è su "On" e salva i progressi
+        if (audioStatus === "on") {
+            // viene usato JSON.stringify per salvare il valore booleano come stringa
+            localStorage.setItem("radio-on", JSON.stringify(true));
+            localStorage.setItem("radio-off", JSON.stringify(false));
+            localStorage.setItem("audioTime", audio.currentTime); // Salva la posizione attuale
+            console.log("Progressi audio salvati");
+        } else {
+            localStorage.setItem("radio-off", JSON.stringify(true));
+            localStorage.setItem("radio-on", JSON.stringify(false));
+            console.log("L'audio è spento");
+        }
+    }
+
+    function openSettings() {
+        document.getElementById("settingsPanel").classList.add("open");
+    }
+
+    function closeSettings() {
+        document.getElementById("settingsPanel").classList.remove("open");
+    }
+
+    // Funzione per il logout
+    function logout() {
+        alert('Logout effettuato!'); // Sostituisci con la logica effettiva di logout
+        closeSettings(); // Chiudi il pannello dopo il logout
+    }
+
+    // Funzione per eliminare l'account
+    function deleteAccount() {
+        if (confirm('Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile.')) {
+            alert('Account eliminato!'); // Sostituisci con la logica effettiva di eliminazione
+            closeSettings(); // Chiudi il pannello dopo l'eliminazione
+        }
+    }
+</script>
 </body>
 </html>
