@@ -21,14 +21,13 @@ class signin{
             if($result === true){
                 header("Location: " . URL . "home/logged");
                 exit;
-            } else {
+            }else{
                 header("Location: " . URL . "signin/form?error=invalid_credentials");
                 exit;
             }
-        } else {
+        }else{
             header("Location: " . URL . "signin/form?error=missing_fields");
             exit;
         }
     }
-
 }

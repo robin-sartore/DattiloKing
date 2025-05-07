@@ -62,33 +62,62 @@
         }
     </style>
 </head>
-<body>
+<body onload="showStats()">
 <div class="container mt-5 text-center">
     <div class="sett">
         <a href="<?php echo URL?>home/logged">
             <img src="<?php echo URL?>application/views/images/back.jpg" alt="Back">
         </a>
     </div>
-    <h1 class="title">Profilo</h1>
+    <h1 class="title" id="titolo"><?php echo $_SESSION['username'];?></h1>
     <div class="profile-container mt-4">
         <div class="profile-box">
             <h2>Daily Statistics</h2>
-            <p><strong>Minimo di parole scritte al minuto:</strong><br> 20.4</p>
-            <p><strong>Massimo di parole scritte al minuto:</strong><br> 20.4</p>
-            <p><strong>Media di parole scritte al minuto:</strong><br> 20.4</p>
-            <p><strong>Percentuale di errore per round:</strong><br> 20.4</p>
-            <p><strong>Velocità media di terminazione round:</strong><br> 90s</p>
+            <p><strong>Minimo di parole scritte al minuto:</strong><br> <span id="velMinGiornalieri"></span></p>
+            <p><strong>Massimo di parole scritte al minuto:</strong><br> <span id="velMaxGiornalieri"></span></p>
+            <p><strong>Media di parole scritte al minuto:</strong><br> <span id="velAvgGiornalieri"></span></p>
+            <p><strong>Percentuale di correttezza media:</strong><br> <span id="accuratezzaAvgGiornalieri"></span></p>
+            <p><strong>Durata media round:</strong><br> <span id="durataAvgGiornalieri"></span></p>
         </div>
         <div class="profile-box">
             <h2>All Time Statistics</h2>
-            <p><strong>Minimo di parole scritte al minuto:</strong><br> 20.4</p>
-            <p><strong>Massimo di parole scritte al minuto:</strong><br> 20.4</p>
-            <p><strong>Media di parole scritte al minuto:</strong><br> 20.4</p>
-            <p><strong>Percentuale di errore per round:</strong><br> 20.4</p>
-            <p><strong>Velocità media di terminazione round:</strong><br> 90s</p>
+            <p><strong>Minimo di parole scritte al minuto:</strong><br> <span id="velMinEterni"></span></p>
+            <p><strong>Massimo di parole scritte al minuto:</strong><br> <span id="velMaxEterni"></span></p>
+            <p><strong>Media di parole scritte al minuto:</strong><br> <span id="velAvgEterni"></span></p>
+            <p><strong>Percentuale di correttezza media:</strong><br> <span id="accuratezzaAvgEterni"></span></p>
+            <p><strong>Durata media round:</strong><br> <span id="durataAvgEterni"></span></p>
         </div>
     </div>
 </div>
 
 </body>
+<script>
+    function showStats(){
+        fetch('application/controller/profile.php', {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                const datiEterni = data.datiEterni;
+                const datiGiornalieri = data.datiGiornalieri;
+                console.log(datiEterni);
+                console.log(datiGiornalieri);
+                document.getElementById("velMinEterni").textContent = datiEterni.velMin || 'N/A';
+                document.getElementById("velMaxEterni").textContent = datiEterni.velMax || 'N/A';
+                document.getElementById("velAvgEterni").textContent = datiEterni.velAvg || 'N/A';
+                document.getElementById("accuratezzaAvgEterni").textContent = datiEterni.accuratezzaAvg + " %" || 'N/A';
+                document.getElementById("durataAvgEterni").textContent = datiEterni.durataAvg + " sec" || 'N/A';
+
+                document.getElementById("velMinGiornalieri").textContent = datiGiornalieri.velMin || 'N/A';
+                document.getElementById("velMaxGiornalieri").textContent = datiGiornalieri.velMax || 'N/A';
+                document.getElementById("velAvgGiornalieri").textContent = datiGiornalieri.velAvg || 'N/A';
+                document.getElementById("accuratezzaAvgGiornalieri").textContent = datiGiornalieri.accuratezzaAvg + " %" || 'N/A';
+                document.getElementById("durataAvgGiornalieri").textContent = datiGiornalieri.durataAvg + " sec" || 'N/A';
+            })
+            .catch(error => console.error('Errore:', error));
+    }
+</script>
 </html>

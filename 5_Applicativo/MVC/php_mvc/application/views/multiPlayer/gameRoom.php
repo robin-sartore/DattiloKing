@@ -6,7 +6,7 @@
     <title>Tastiera Virtuale</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body{
+        body {
             background-color: #0b0d21;
         }
 
@@ -34,7 +34,7 @@
             background-color: #7efc2e; /* Colore quando il tasto è premuto */
         }
 
-        .mt-5{
+        .mt-5 {
             font-size: 10rem;
             font-weight: bold;
             color: red;
@@ -44,7 +44,7 @@
             width: 50%;
         }
 
-        .frase{
+        .frase {
             color: white;
             font-size: 50px;
             width: 65%;
@@ -57,10 +57,12 @@
         .highlight {
             color: #7efc2e;
         }
-        .wrong{
+
+        .wrong {
             color: red;
         }
-        .sottolineato{
+
+        .sottolineato {
             text-decoration: underline;
         }
 
@@ -76,44 +78,39 @@
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
         }
 
+        .player-list {
+            margin-top: 20px;
+        }
+
+        .player-item {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body onload="stampaTesto()">
 <?php
 session_start();
-$rounds = isset($_SESSION["rounds"]) ? $_SESSION["rounds"] : "Non specificato";$code = isset($_SESSION["code"]) ? $_SESSION["code"] : "Non specificato";
+$rounds = isset($_SESSION["rounds"]) ? $_SESSION["rounds"] : "Non specificato";
+$code = isset($_SESSION["code"]) ? $_SESSION["code"] : "Non specificato";
+$username = isset($_SESSION["username"]) ? $_SESSION["username"] : "Guest";
 ?>
 
 <div class="sidebar">
-    <h2>
-        Velocità:
-    </h2>
-    <h1 id="velocita">
-        WPM
-    </h1> <br> <br>
-    <h2>
-        Accuratezza:
-    </h2>
-    <h1 id="percentualeCorrettezza">
-        %
-    </h1> <br> <br>
-    <h2>
-        Tempo:
-    </h2>
-    <h1 id="tempo">
-        sec
-    </h1> <br> <br>
-    <h2>
-        Numero round:
-    </h2>
-    <h1 id="round">
-        <?php echo $rounds; ?>
-    </h1>
+    <h2>Velocità:</h2>
+    <h1 id="velocita">WPM</h1> <br> <br>
+    <h2>Accuratezza:</h2>
+    <h1 id="percentualeCorrettezza">%</h1> <br> <br>
+    <h2>Tempo:</h2>
+    <h1 id="tempo">sec</h1> <br> <br>
+    <h2>Numero round:</h2>
+    <h1 id="round"><?php echo $rounds; ?></h1>
+    <div class="player-list">
+        <h2>Giocatori:</h2>
+        <div id="playerList"></div>
+    </div>
 </div>
 
-<div class="frase" id="frase">
-
-</div>
+<div class="frase" id="frase"></div>
 <div class="container text-center">
     <div class="keyboard">
         <button class="key" id="key-1">1</button>
@@ -169,8 +166,38 @@ $rounds = isset($_SESSION["rounds"]) ? $_SESSION["rounds"] : "Non specificato";$
     let intervalloTempo;
     let primoTastoPremuto = false;
     let tastiPremuti = {};
+    let ws;
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        ws = new WebSocket('ws://localhost:8080');
+        ws.onopen = function() {
+            ws.send(JSON.stringify({ type: 'join', username: '<?php echo $username; ?>' }));
+        };
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            if (data.type === 'playerJoined') {
+                aggiornaListaGiocatori(data.player);
+            } else if (data.type === 'update') {
+                aggiornaDatiGiocatore(data.player, data.score, data.accuracy, data.speed);
+            }
+        };
+    });
+
+    function aggiornaListaGiocatori(player) {
+        const playerList = document.getElementById('playerList');
+        const playerItem = document.createElement('div');
+        playerItem.className = 'player-item';
+        playerItem.innerHTML = `<strong>${player}</strong>`;
+        playerList.appendChild(playerItem);
+    }
+
+    function aggiornaDatiGiocatore(player, score, accuracy, speed) {
+        const playerItem = document.querySelector(`.player-item strong:contains('${player}')`).parentElement;
+        playerItem.innerHTML = `<strong>${player}</strong><br>Score: ${score}<br>Accuracy: ${accuracy}%<br>Speed: ${speed} WPM`;
+    }
+
     document.addEventListener('keydown', function(event) {
-        if(primoTastoPremuto == false){
+        if (primoTastoPremuto == false) {
             intervalloTempo = setInterval(incrementaTempo, 1000);
             primoTastoPremuto = true;
         }
@@ -209,41 +236,39 @@ $rounds = isset($_SESSION["rounds"]) ? $_SESSION["rounds"] : "Non specificato";$
         tastiPremuti[key] = false;
     });
 
-
     let indiceLettera = 0;
     let primoAccesso = true;
     let letteraPrecedentementeSbagliata = false;
     let fraseArray = [];
 
     let numeroErrori = 0;
-    function stampaTesto(lettera){
+    function stampaTesto(lettera) {
         fetch('../../php_mvc/application/controller/phrase.php')
             .then(response => response.text())
             .then(data => {
-                if(primoAccesso){
+                if (primoAccesso) {
                     fraseArray = data.split(""); // Converte la frase in un array di caratteri
                     document.getElementById("frase").innerText = data;
                     primoAccesso = false;
-                }else{
+                } else {
                     let prossimaLettera = fraseArray[indiceLettera].replace(/\u0332/g, '');
                     if (prossimaLettera === lettera) {
-                        if(indiceLettera <= fraseArray.length-2){
-                            let letteraDopoProssimaLettera = fraseArray[indiceLettera+1];
-                            fraseArray[indiceLettera+1] = letteraDopoProssimaLettera  + '\u0332';
+                        if (indiceLettera <= fraseArray.length - 2) {
+                            let letteraDopoProssimaLettera = fraseArray[indiceLettera + 1];
+                            fraseArray[indiceLettera + 1] = letteraDopoProssimaLettera + '\u0332';
                         }
-                        if(letteraPrecedentementeSbagliata === true){
+                        if (letteraPrecedentementeSbagliata === true) {
                             fraseArray[indiceLettera] = `<span class="wrong">${prossimaLettera}</span>`;
                             letteraPrecedentementeSbagliata = false;
                             numeroErrori++;
-                        }else{
+                        } else {
                             fraseArray[indiceLettera] = `<span class="highlight">${prossimaLettera}</span>`;
-                            if(indiceLettera === fraseArray.length-1){
-                                let percentualeCorrettezza = 100-(((numeroErrori/fraseArray.length)*100).toFixed(1));
-                                document.getElementById('percentualeCorrettezza').innerText = percentualeCorrettezza+"%";
+                            if (indiceLettera === fraseArray.length - 1) {
+                                let percentualeCorrettezza = 100 - (((numeroErrori / fraseArray.length) * 100).toFixed(1));
+                                document.getElementById('percentualeCorrettezza').innerText = percentualeCorrettezza + "%";
 
                                 clearInterval(intervalloTempo);
-                                //let velocita = ((fraseArray.length/tempo)*60).toFixed(1);
-                                let velocita = (fraseArray.length/5)/(tempo/60);
+                                let velocita = (fraseArray.length / 5) / (tempo / 60);
                                 document.getElementById('velocita').innerHTML = velocita + " WPM";
 
                                 document.getElementById('tempo').innerHTML = tempo + " sec";
@@ -256,12 +281,20 @@ $rounds = isset($_SESSION["rounds"]) ? $_SESSION["rounds"] : "Non specificato";$
                                 fraseArray = [];
                                 numeroErrori = 0;
 
+                                // Invia aggiornamento al server
+                                ws.send(JSON.stringify({
+                                    type: 'update',
+                                    username: '<?php echo $username; ?>',
+                                    score: fraseArray.length,
+                                    accuracy: percentualeCorrettezza,
+                                    speed: velocita
+                                }));
+
                                 stampaTesto();
                             }
                         }
                         indiceLettera++;
-                    }
-                    else{
+                    } else {
                         letteraPrecedentementeSbagliata = true;
                     }
                     document.getElementById("frase").innerHTML = fraseArray.join("");
@@ -271,13 +304,10 @@ $rounds = isset($_SESSION["rounds"]) ? $_SESSION["rounds"] : "Non specificato";$
     }
 
     let tempo = 0;
-    function incrementaTempo(){
-
+    function incrementaTempo() {
         tempo++;
         console.log(tempo);
     }
-
-
 </script>
 </body>
 </html>

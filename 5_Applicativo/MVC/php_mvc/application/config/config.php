@@ -9,7 +9,7 @@ $final = $actual_link.str_replace($documentRoot, '',$dir);
 define('URL',$final);
 
 define('HOST','localhost');
-define('USERNAME','root');
-define('PASSWORD','');
+define('USERNAME','mvc_user');
+define('PASSWORD','Admin$00');
 define('DATABASE','dattiloking');
 define('PORT','3306');
