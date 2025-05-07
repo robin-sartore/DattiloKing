@@ -19,14 +19,13 @@ class signin{
             $result = $userMapper->loginInManageModel($username, $password);
 
             if($result === true){
-                header("Location: " . URL . "home/logged");
+                echo json_encode(['success' => true]);
                 exit;
             }else{
-                header("Location: " . URL . "signin/form?error=invalid_credentials");
+                echo json_encode(['error' => 'invalid_credentials']);
                 exit;
             }
         }else{
-            header("Location: " . URL . "signin/form?error=missing_fields");
             exit;
         }
     }

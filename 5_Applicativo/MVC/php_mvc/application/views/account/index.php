@@ -132,7 +132,7 @@
     };
 
     function saveAudioProgress() {
-        localStorage.setItem("audioTime", audio.currentTime); // Salva la posizione attuale
+        localStorage.setItem("audioTime", audio.currentTime);
     }
 
     function validateSignUp() {
@@ -141,12 +141,6 @@
         var passwordConfirm = document.getElementById("signup-passwordConfirm").value.trim();
         var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/;
 
-        <?php if(isset($_GET['error'])): ?>
-        <?php if($_GET['error'] === 'user_exists'): ?>
-        document.getElementById("errors").innerHTML = "L'utente esiste già!";
-        return false;
-        <?php endif; ?>
-        <?php endif; ?>
 
         if (!username && !password) {
             document.getElementById("errors").innerHTML = "Inserisci username e password!";
@@ -173,7 +167,22 @@
             return false;
         }
 
-        return true;
+        var formData = new FormData(document.getElementById("signup-form"));
+
+        fetch('<?php echo URL; ?>signup/signUpManage', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error === 'user_exists') {
+                    document.getElementById("errors").innerHTML = "L'utente esiste già!";
+                } else if (data.success) {
+                    window.location.href = "<?php echo URL; ?>home/logged";
+                }
+            })
+
+        return false;
     }
     function validateSignIn() {
         var username = document.getElementById("signin-username").value.trim();
@@ -194,7 +203,22 @@
             return false;
         }
 
-        return true;
+        var formData = new FormData(document.getElementById("signin-form"));
+
+        fetch('<?php echo URL; ?>signin/signInManage', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error === 'invalid_credentials') {
+                    document.getElementById("errors").innerHTML = "Credenziali non valide!";
+                } else if (data.success) {
+                    window.location.href = "<?php echo URL; ?>home/logged";
+                }
+            })
+
+        return false;
     }
 </script>
 

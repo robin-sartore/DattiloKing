@@ -4,11 +4,11 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 class lingua{
     public function cambiaLingua(){
-        if (isset($_GET['lingua'])) {
-            $_SESSION['lingua'] = $_GET['lingua'];
+        if (isset($_POST['lingua'])) {
+            $_SESSION['lingua'] = $_POST['lingua'];
         }
         if($_SESSION['logged']){
-            header('Location: ' . URL . 'play/singlePlayerPage');
+            header('Location: ' . URL . 'home/logged');
         }else{
             header('Location: ' . URL . 'home/notLogged');
         }

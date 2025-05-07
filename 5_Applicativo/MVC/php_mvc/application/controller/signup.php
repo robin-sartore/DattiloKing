@@ -36,10 +36,10 @@ class signup{
             $result = $userMapper->signUpManageModel($username, $password, $passwordConfirm);
 
             if ($result === false) {
-                header("Location: " . URL . "signup/form?error=user_exists");
+                echo json_encode(['error' => 'user_exists']);
                 exit;
             } else {
-                header("Location: " . URL . "home/logged");
+                echo json_encode(['success' => true]);
                 exit;
             }
         } else {

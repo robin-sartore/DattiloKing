@@ -163,11 +163,11 @@
     <div class="settings-content">
         <h3>Lingua</h3>
 
-        <form action="<?php echo URL?>lingua/cambiaLingua">
-            <select class="dropdown" name="lingua" onchange="this.form.submit()">
-                <option value="italiano">Italiano</option>
-                <option value="inglese">English</option>
-                <option value="spagnolo">Español</option>
+        <form action="<?php echo URL ?>lingua/cambiaLingua" method="POST">
+            <select class="dropdown" id="language" name="lingua">
+                <option value="italiano" <?php $_SESSION['lingua'] === 'italiano' ?>>Italiano</option>
+                <option value="english" <?php $_SESSION['lingua'] === 'english' ?>>English</option>
+                <option value="español" <?php $_SESSION['lingua'] === 'español'?>>Español</option>
             </select>
         </form>
 
@@ -202,10 +202,10 @@
 
 <audio id="background-audio" loop>
     <source src='<?php echo URL?>application/views/audio/audio.mp3' type="audio/mpeg">
-    Il tuo browser non supporta l'audio
 </audio>
 
 <script>
+
     let audio = document.getElementById("background-audio");
     document.getElementById("radio-on").checked = true;
 
@@ -237,6 +237,7 @@
 
     // Al caricamento della pagina esegue la funzione
     window.onload = () => {
+
         //localStorage.clear();
         console.log(localStorage.length);
         if (localStorage.length !== 0) {
@@ -252,6 +253,7 @@
                 audio.play().catch(error => console.error("Errore durante la riproduzione:", error));
             }
         }, { once: true });
+
     };
 
 
