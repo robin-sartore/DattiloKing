@@ -1,3 +1,24 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+require_once 'application/models/RoomMapper.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["code"])) {
+    $codice = $_POST["code"];
+    $roomMapper = new RoomMapper();
+
+    if ($roomMapper->roomExists($codice)) {
+        $roomMapper->aggiungiPartecipante($codice, $_SESSION['username']);
+        $_SESSION['code'] = $codice;
+        $_SESSION['creatore'] = false;
+        header("Location: " . URL . "play/multiPlayerRoomList");
+        exit;
+    } else {
+        echo "La stanza non esiste.";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +28,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
     <style>
+        .sett {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+        }
+        .sett img {
+            width: 50px;
+        }
         body {
             background-color: #0b0d21;
             color: white;
@@ -51,100 +81,6 @@
             width: 300px;
             margin: 20px auto;
         }
-
-        .sett {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            cursor: pointer;
-        }
-        .sett img {
-            width: 50px;
-        }
-
-        /* Pannello Impostazioni */
-        .settings-panel {
-            position: fixed;
-            top: 0;
-            left: -350px;
-            width: 350px;
-            height: 100%;
-            background-color: #ebe8e8;
-            padding: 20px;
-            transition: left 0.3s ease;
-            box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.5);
-            font-family: Arial, sans-serif;
-        }
-        .settings-panel.open {
-            left: 0;
-        }
-        .settings-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: black;
-        }
-        .close-btn {
-            cursor: pointer;
-            font-size: 30px;
-        }
-        .settings-content {
-            margin-top: 20px;
-        }
-        .settings-content h3 {
-            font-size: 20px;
-            color: black;
-        }
-        .dropdown {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #b5b5b5;
-            font-size: 16px;
-            color: black;
-        }
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .radio-group label {
-            font-size: 18px;
-            color: black;
-        }
-        .settings-content button {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            background: red;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-        .settings-content button:hover {
-            background: darkred;
-        }
-        .btn-home {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        .btn-home img {
-            width: 50px; /* Regola la dimensione dell'icona */
-            height: auto;
-            transition: opacity 0.3s;
-        }
-
-        .btn-home:hover img {
-            opacity: 0.7;
-        }
-
     </style>
 </head>
 <body>
@@ -158,9 +94,9 @@
 
     <!-- Titolo e contenuto principale -->
     <h1 class="title">Join Room</h1>
-    <form action="<?php echo URL?>play/multiPlayerRoomList" method="POST">
+    <form action="<?php echo URL?>play/multiPlayerJoinRoom" method="POST">
         <p class="subtitle">Insert Code</p>
-        <input class="text-custom" type="text" name="code">
+        <input class="text-custom" type="text" name="code" required>
         <br>
         <button class="btn btn-custom">Join Room</button>
     </form>

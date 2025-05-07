@@ -11,7 +11,7 @@ class home
     }
     public function logged(){
         if($_SESSION['logged']){
-            require  'application/views/homeLogged/index.php';
+            require 'application/views/homeLogged/index.php';
         }else{
             header('location: ' . URL . 'account/accountPage');
         }

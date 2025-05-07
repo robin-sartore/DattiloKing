@@ -138,7 +138,7 @@
     </div>
 
     <h1 class="title">Dattilo King</h1>
-    <p class="subtitle">The best way to learn to write fast</p>
+    <p class="subtitle">Type at lightning speed, like a true king!</p>
     <form action="<?php echo URL ?>play/singlePlayerPage">
         <button class="btn btn-custom">Single player</button>
     </form>
@@ -161,9 +161,8 @@
     <div class="settings-content">
         <h3>Lingua</h3>
         <select class="dropdown">
-            <option>Italiano</option>
             <option>English</option>
-            <option>Español</option>
+            <option>Italiano</option>
         </select>
 
         <h3 class="mt-4">Audio</h3>

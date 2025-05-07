@@ -1,3 +1,21 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}require_once 'application/models/RoomMapper.php';
+
+// Funzione per generare un codice stanza univoco
+function generaCodiceRoom($length = 6) {
+    return strtoupper(substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, $length));
+}
+
+$codice = generaCodiceRoom();
+$roomMapper = new RoomMapper();
+$roomMapper->creaStanza($codice, $_SESSION['username'], 0); // Inizializza i round a 0
+$roomMapper->aggiungiPartecipante($codice, $_SESSION['username']);
+
+$_SESSION['code'] = $codice;
+$_SESSION['creatore'] = true;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,98 +56,6 @@
         .btn-custom:hover {
             background: rgba(255, 255, 255, 0.4);
         }
-        .sett {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            cursor: pointer;
-        }
-        .sett img {
-            width: 50px;
-        }
-
-        /* Pannello Impostazioni */
-        .settings-panel {
-            position: fixed;
-            top: 0;
-            left: -350px;
-            width: 350px;
-            height: 100%;
-            background-color: #ebe8e8;
-            padding: 20px;
-            transition: left 0.3s ease;
-            box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.5);
-            font-family: Arial, sans-serif;
-        }
-        .settings-panel.open {
-            left: 0;
-        }
-        .settings-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: black;
-        }
-        .close-btn {
-            cursor: pointer;
-            font-size: 30px;
-        }
-        .settings-content {
-            margin-top: 20px;
-        }
-        .settings-content h3 {
-            font-size: 20px;
-            color: black;
-        }
-        .dropdown {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #b5b5b5;
-            font-size: 16px;
-            color: black;
-        }
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .radio-group label {
-            font-size: 18px;
-            color: black;
-        }
-        .settings-content button {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            background: red;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-        .settings-content button:hover {
-            background: darkred;
-        }
-        .btn-home {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        .btn-home img {
-            width: 50px; /* Regola la dimensione dell'icona */
-            height: auto;
-            transition: opacity 0.3s;
-        }
-
-        .btn-home:hover img {
-            opacity: 0.7;
-        }
         .text-custom {
             font-size: 1.5rem;
             padding: 15px 30px;
@@ -152,7 +78,6 @@
             width: 300px;
             text-align: left;
         }
-
         .player {
             font-size: 1.5rem;
             background: rgba(255, 255, 255, 0.2);
@@ -160,8 +85,18 @@
             border-radius: 5px;
             margin: 5px 0;
         }
-
-
+        .creator {
+            color: yellow;
+        }
+        .sett {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+        }
+        .sett img {
+            width: 50px;
+        }
     </style>
 </head>
 <body>
@@ -175,23 +110,51 @@
 
     <!-- Titolo e contenuto principale -->
     <h1 class="title">Create Room</h1>
-    <!-- Se possibile fare che se si clica si copia-->
     <form action="<?php echo URL ?>play/multiPlayerGameRoom" method="POST">
         <p class="subtitle">Code</p>
-        <input class="text-custom" type="text" name="code" disabled value="#Jp6z">
-
+        <input class="text-custom" type="text" name="code" readonly value="<?php echo $codice ?>">
 
         <p class="subtitle">Numero Round</p>
         <input class="text-custom" type="number" name="rounds" required>
+        <input type="hidden" name="creatore" value="<?php echo $_SESSION['username'] ?>">
 
         <p class="subtitle">Giocatori nella stanza:</p>
         <div id="playerContainer" class="player-container">
-            Player 1 (tu)
-            <br>
-            player 2
         </div>
         <br>
         <button class="btn btn-custom" type="submit">Start game</button>
     </form>
+    <script>
+        // Passa il valore di $_SESSION['username'] a una variabile JavaScript
+        const currentUsername = '<?php echo $_SESSION['username']; ?>';
+
+        setInterval(() => {
+            fetch('<?php echo URL ?>play/getRoomPlayers?code=<?php echo $codice ?>')
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById('playerContainer');
+                    container.innerHTML = '';
+                    const creator = data.creator; // Recupera il nome del creatore
+                    data.players.forEach(player => {
+                        const playerDiv = document.createElement('div');
+                        playerDiv.className = 'player';
+
+                        // Confronta la variabile JavaScript currentUsername
+                        if (player === currentUsername) {
+                            playerDiv.textContent = player + " (TU)";
+                        } else {
+                            playerDiv.textContent = player;
+                        }
+
+                        // Evidenzia il nome del creatore in giallo
+                        if (player === creator) {
+                            playerDiv.className += ' creator';
+                        }
+
+                        container.appendChild(playerDiv);
+                    });
+                });
+        }, 2000);
+    </script>
 </body>
 </html>
