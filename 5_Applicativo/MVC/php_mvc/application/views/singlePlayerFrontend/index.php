@@ -91,7 +91,7 @@
 </head>
 <?php if (isset($_SESSION['logged'])): ?>
     <div class="sett">
-        <a href="<?php echo URL ?>home/logged" onclick="saveAudioProgress()">
+        <a href="<?php echo URL ?>home/logged">
             <img src="<?php echo URL ?>application/views/images/back.jpg" alt="Back">
         </a>
     </div>
