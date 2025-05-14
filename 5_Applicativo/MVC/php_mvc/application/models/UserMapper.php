@@ -106,6 +106,25 @@ class UserMapper{
         }
     }
 
+    public function deleteUserModel() {
+        $deleteTurnoStorico = $this->connection->prepare("DELETE FROM turno_storico WHERE utente_username = ?");
+        $deleteTurnoStorico->bindParam(1, $_SESSION['username']);
+        $deleteTurnoStorico->execute();
+
+        $delete = $this->connection->prepare("DELETE FROM utente WHERE username = ?");
+        $delete->bindParam(1, $_SESSION['username']);
+        $delete->execute();
+
+        if ($delete->rowCount() > 0) {
+            unset($_SESSION['username']);
+            unset($_SESSION['lingua']);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     public function showStatsModel($username){
         $dateActual = date('Y-m-d');

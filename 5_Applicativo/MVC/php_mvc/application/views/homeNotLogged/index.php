@@ -150,7 +150,6 @@
     </div>
 </div>
 
-<!-- Pannello Impostazioni -->
 <div id="settingsPanel" class="settings-panel">
     <div class="settings-header">
         <span>Settings</span>
@@ -192,7 +191,6 @@
     let audio = document.getElementById("background-audio");
     document.getElementById("radio-on").checked = true;
 
-    // Funzione per avviare o fermare l'audio in base alla selezione del radiobutton
     function updateAudio() {
 
         // Se "on" è selezionato, avvia la riproduzione dell'audio

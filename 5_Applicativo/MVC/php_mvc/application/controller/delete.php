@@ -5,15 +5,17 @@ if (session_status() == PHP_SESSION_NONE) {
 class delete
 {
     public function __construct(){
-
+        require_once 'application/models/UserMapper.php';
     }
     public function deleteUser(){
-        require_once 'application/models/Database.php';
-        $this->connection = Database::getConnection();
-        $salvataggioUtente = $this->connection->prepare('DELETE FROM utente where username=(?)');
-        $salvataggioUtente->bindParam(1, $_SESSION['username']);//implementare session username
-        $salvataggioUtente->execute();
-        header("Location:" . URL);
+        $userMapper = new UserMapper();
+        $result = $userMapper->deleteUserModel();
+        if($result){
+            echo json_encode(['status' => 'success', 'message' => 'Utente Salvato con successo!']);
+        }else{
+            echo json_encode(['status' => 'error', 'message' => 'Errore nell eliminazione dell utente!']);
+        }
+        header('location: ' . URL . 'home/notLogged');
 
     }
 

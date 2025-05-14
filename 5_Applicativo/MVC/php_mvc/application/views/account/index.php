@@ -211,8 +211,8 @@
         })
             .then(response => response.json())
             .then(data => {
-                if (data.error === 'invalid_credentials') {
-                    document.getElementById("errors").innerHTML = "Credenziali non valide!";
+                if (data.error === 'user_not_exists') {
+                    document.getElementById("errors").innerHTML = "Utente non esiste o Credenziali non valide!";
                 } else if (data.success) {
                     window.location.href = "<?php echo URL; ?>home/logged";
                 }

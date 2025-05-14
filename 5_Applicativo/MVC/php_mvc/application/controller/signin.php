@@ -22,7 +22,7 @@ class signin{
                 echo json_encode(['success' => true]);
                 exit;
             }else{
-                echo json_encode(['error' => 'invalid_credentials']);
+                echo json_encode(['error' => 'user_not_exists']);
                 exit;
             }
         }else{
