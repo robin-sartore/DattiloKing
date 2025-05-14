@@ -164,10 +164,10 @@
         <h3>Lingua</h3>
 
         <form action="<?php echo URL ?>lingua/cambiaLingua" method="POST">
-            <select class="dropdown" id="language" name="lingua">
-                <option value="italiano" <?php $_SESSION['lingua'] === 'italiano' ?>>Italiano</option>
-                <option value="english" <?php $_SESSION['lingua'] === 'english' ?>>English</option>
-                <option value="español" <?php $_SESSION['lingua'] === 'español'?>>Español</option>
+            <select class="dropdown" id="language" name="lingua" onchange="this.form.submit()">
+                <option value="italiano" <?php echo ($_SESSION['lingua'] === 'italiano') ? 'selected' : '' ?>>Italiano</option>
+                <option value="inglese" <?php echo ($_SESSION['lingua'] === 'inglese') ? 'selected' : '' ?>>English</option>
+                <option value="spagnolo" <?php echo ($_SESSION['lingua'] === 'spagnolo') ? 'selected' : '' ?>>Español</option>
             </select>
         </form>
 
@@ -235,10 +235,8 @@
         radio.addEventListener("change", updateAudio); // Collega l'evento "change" alla funzione updateAudio
     });
 
-    // Al caricamento della pagina esegue la funzione
     window.onload = () => {
 
-        //localStorage.clear();
         console.log(localStorage.length);
         if (localStorage.length !== 0) {
             const on = JSON.parse(localStorage.getItem("radio-on"));

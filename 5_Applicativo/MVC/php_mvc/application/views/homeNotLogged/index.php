@@ -147,8 +147,6 @@
         <form action="<?php echo URL?>account/accountPage" onsubmit="saveAudioProgress()">
             <button class="btn btn-custom" style="width: 300px;">Sign In/Up</button>
         </form>
-        <!--<input class="btn btn-custom" type="submit" value="Sign In">
-        <input class="btn btn-custom" type="submit" value="Sign Up"> -->
     </div>
 </div>
 
@@ -160,10 +158,13 @@
     </div>
     <div class="settings-content">
         <h3>Lingua</h3>
-        <select class="dropdown">
-            <option>English</option>
-            <option>Italiano</option>
-        </select>
+        <form action="<?php echo URL ?>lingua/cambiaLingua" method="POST">
+            <select class="dropdown" id="language" name="lingua" onchange="this.form.submit()">
+                <option value="italiano" <?php echo ($_SESSION['lingua'] === 'italiano') ? 'selected' : '' ?>>Italiano</option>
+                <option value="inglese" <?php echo ($_SESSION['lingua'] === 'inglese') ? 'selected' : '' ?>>English</option>
+                <option value="spagnolo" <?php echo ($_SESSION['lingua'] === 'spagnolo') ? 'selected' : '' ?>>Español</option>
+            </select>
+        </form>
 
         <h3 class="mt-4">Audio</h3>
         <div class="radio-group">
