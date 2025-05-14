@@ -97,7 +97,7 @@
     </div>
 <?php else: ?>
     <div class="sett">
-        <a href="<?php echo URL ?>home/notLogged" onclick="saveAudioProgress()">
+        <a href="<?php echo URL ?>home/notLogged">
             <img src="<?php echo URL ?>application/views/images/back.jpg" alt="Back">
         </a>
     </div>
