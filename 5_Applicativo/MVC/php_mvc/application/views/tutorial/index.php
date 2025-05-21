@@ -173,4 +173,24 @@
 </div>
 
 </body>
+
+<audio id="background-audio" loop>
+    <source src='<?php echo URL?>application/views/audio/audio.mp3' type="audio/mpeg">
+</audio>
+<script>
+    const audio = document.getElementById("background-audio");
+
+    window.onload = () => {
+        if (localStorage.getItem("audioTime") !== null) {
+            const savedTime = localStorage.getItem("audioTime");
+            localStorage.removeItem("audioTime");
+            audio.currentTime = parseFloat(savedTime);
+            audio.play().catch(error => console.error("Errore durante la riproduzione:", error));
+        }
+    };
+
+    function saveAudioProgress() {
+        localStorage.setItem("audioTime", audio.currentTime);
+    }
+</script>
 </html>

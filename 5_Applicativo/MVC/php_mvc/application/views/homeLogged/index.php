@@ -133,21 +133,21 @@
 </head>
 <body>
 <div class="container d-flex flex-column justify-content-center align-items-center vh-100">
-    <div class="sett" onclick="openSettings()">
+    <div class="sett" onclick="openSettings()" >
         <img src="<?php echo URL?>application/views/images/settings.png" alt="Settings">
     </div>
 
     <h1 class="title">Dattilo King</h1>
     <p class="subtitle">Type at lightning speed, like a true king!</p>
-    <form action="<?php echo URL ?>play/singlePlayerPage">
+    <form action="<?php echo URL ?>play/singlePlayerPage" onsubmit="saveAudioProgress()">
         <button class="btn btn-custom">Single player</button>
     </form>
-    <form action="<?php echo URL?>play/multiPlayerStarterPage">
+    <form action="<?php echo URL?>play/multiPlayerStarterPage" onsubmit="saveAudioProgress()">
         <button class="btn btn-custom">Multi player</button>
     </form>    <div class="d-flex gap-3 mt-3">
         <div class="d-flex gap-3 mt-3">
             <button class="btn-home">
-                <a href="<?php echo URL?>profile/profilePage">
+                <a href="<?php echo URL?>profile/profilePage" onclick="saveAudioProgress()">
                     <img src="<?php echo URL?>application/views/images/home.png" alt="Home">
                 </a>
             </button>
@@ -179,40 +179,38 @@
         <br>
         <br>
         <div>
-            <a href="<?php echo URL?>home/openTutorial">
+            <a href="<?php echo URL?>home/openTutorial" onclick="saveAudioProgress()">
                 <button>Tutorial</button>
             </a>
             <br>
             <br>
         </div>
         <div>
-            <a href="<?php echo URL?>logout/logout">
+            <a href="<?php echo URL?>logout/logout" onclick="saveAudioProgress()">
                 <button>Log Out</button>
             </a>
             <br>
             <br>
         </div>
         <div>
-            <a href="<?php echo URL?>delete/deleteUser">
+            <a href="<?php echo URL?>delete/deleteUser" onclick="saveAudioProgress()">
                 <button>Delete Account</button>
             </a>
         </div>
     </div>
 </div>
 
-<audio id="background-audio" loop>
-    <source src='<?php echo URL?>application/views/audio/audio.mp3' type="audio/mpeg">
-</audio>
+    <audio id="background-audio" loop>
+        <source src='<?php echo URL?>application/views/audio/audio.mp3' type="audio/mpeg">
+    </audio>
 
 <script>
 
     let audio = document.getElementById("background-audio");
     document.getElementById("radio-on").checked = true;
 
-    // Funzione per avviare o fermare l'audio in base alla selezione del radiobutton
     function updateAudio() {
 
-        // Se "on" è selezionato, avvia la riproduzione dell'audio
         if (document.getElementById("radio-on").checked === true) {
             if (localStorage.getItem("audioTime") !== null){
                 const savedTime = localStorage.getItem("audioTime");
@@ -229,15 +227,12 @@
         }
     }
 
-    // Aggiunge l'evento "change" a tutti i radiobutton per rilevare cambiamenti
-    const radioButtons = document.querySelectorAll('input[name="audio"]'); // Seleziona tutti i radiobutton con name="audio"
+    const radioButtons = document.querySelectorAll('input[name="audio"]');
     radioButtons.forEach(radio => {
-        radio.addEventListener("change", updateAudio); // Collega l'evento "change" alla funzione updateAudio
+        radio.addEventListener("change", updateAudio);
     });
 
     window.onload = () => {
-
-        console.log(localStorage.length);
         if (localStorage.length !== 0) {
             const on = JSON.parse(localStorage.getItem("radio-on"));
             const off = JSON.parse(localStorage.getItem("radio-off"));
@@ -251,20 +246,16 @@
                 audio.play().catch(error => console.error("Errore durante la riproduzione:", error));
             }
         }, { once: true });
-
     };
 
 
     function saveAudioProgress() {
-        // Recupera il valore del radiobutton selezionato
         const audioStatus = document.querySelector('input[name="audio"]:checked').value;
 
-        // Verifica se l'audio è su "On" e salva i progressi
         if (audioStatus === "on") {
-            // viene usato JSON.stringify per salvare il valore booleano come stringa
             localStorage.setItem("radio-on", JSON.stringify(true));
             localStorage.setItem("radio-off", JSON.stringify(false));
-            localStorage.setItem("audioTime", audio.currentTime); // Salva la posizione attuale
+            localStorage.setItem("audioTime", audio.currentTime);
             console.log("Progressi audio salvati");
         } else {
             localStorage.setItem("radio-off", JSON.stringify(true));

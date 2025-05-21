@@ -139,7 +139,7 @@
 
     <h1 class="title">Dattilo King</h1>
     <p class="subtitle">Type at lightning speed, like a true king!</p>
-    <form action="<?php echo URL ?>play/singlePlayerPage">
+    <form action="<?php echo URL ?>play/singlePlayerPage" onsubmit="saveAudioProgress()">
         <button class="btn btn-custom">Single player</button>
     </form>
     <button class="btn btn-custom" disabled>Multi player</button>
@@ -173,7 +173,7 @@
         <br>
         <br>
         <div>
-            <a href="<?php echo URL?>home/openTutorial">
+            <a href="<?php echo URL?>home/openTutorial" onclick="saveAudioProgress()">
                 <button>Tutorial</button>
             </a>
             <br>

@@ -65,7 +65,7 @@
 <body onload="showStats()">
 <div class="container mt-5 text-center">
     <div class="sett">
-        <a href="<?php echo URL?>home/logged">
+        <a href="<?php echo URL?>home/logged" onclick="saveAudioProgress()">
             <img src="<?php echo URL?>application/views/images/back.jpg" alt="Back">
         </a>
     </div>
@@ -90,8 +90,27 @@
     </div>
 </div>
 
+<audio id="background-audio" loop>
+    <source src='<?php echo URL?>application/views/audio/audio.mp3' type="audio/mpeg">
+</audio>
+
 </body>
 <script>
+    const audio = document.getElementById("background-audio");
+
+    window.onload = () => {
+        if (localStorage.getItem("audioTime") !== null) {
+            const savedTime = localStorage.getItem("audioTime");
+            localStorage.removeItem("audioTime");
+            audio.currentTime = parseFloat(savedTime);
+            audio.play().catch(error => console.error("Errore durante la riproduzione:", error));
+        }
+    };
+
+    function saveAudioProgress() {
+        localStorage.setItem("audioTime", audio.currentTime);
+    }
+
     function showStats(){
         fetch('application/controller/profile.php', {
             headers: {

@@ -92,19 +92,19 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="sign-in" role="tabpanel">
-                <form id="signin-form" action="<?php echo URL?>signin/signInManage" method="POST" onsubmit="return validateSignIn();">
+                <form id="signin-form" action="<?php echo URL?>signin/signInManage" method="POST" onsubmit="return validateSignIn()">
                     <input type="text" class="form-control mb-3" placeholder="Username" name="username" id="signin-username">
                     <input type="password" class="form-control mb-3" placeholder="Password" name="password" id="signin-password">
-                    <input class="btn btn-dark w-100" type="submit" value="SIGN IN">
+                    <input class="btn btn-dark w-100" type="submit" value="SIGN IN" onclick="saveAudioProgress()">
                 </form>
 
             </div>
             <div class="tab-pane fade" id="sign-up" role="tabpanel">
-                <form id="signup-form" action="<?php echo URL?>signup/signUpManage" method="POST" onsubmit="return validateSignUp();">
+                <form id="signup-form" action="<?php echo URL?>signup/signUpManage" method="POST" onsubmit="return validateSignUp()">
                     <input type="text" class="form-control mb-3" placeholder="Username" name="username" id="signup-username">
                     <input type="password" class="form-control mb-3" placeholder="Password" name="password" id="signup-password">
                     <input type="password" class="form-control mb-3" placeholder="Confirm Password" name="passwordConfirm" id="signup-passwordConfirm">
-                    <input class="btn btn-dark w-100" type="submit" value="SIGN UP">
+                    <input class="btn btn-dark w-100" type="submit" value="SIGN UP" onclick="saveAudioProgress()">
                 </form>
             </div>
         </div> <br>
@@ -121,7 +121,6 @@
 
     const audio = document.getElementById("background-audio");
 
-    // Recupera i progressi salvati
     window.onload = () => {
         if (localStorage.getItem("audioTime") !== null) {
             const savedTime = localStorage.getItem("audioTime");
