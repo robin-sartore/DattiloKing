@@ -102,7 +102,7 @@
         </a>
     </div>
 <?php endif; ?>
-<body onload="stampaTesto()">
+<body>
 
 <div class="sidebar">
     <h2>
@@ -187,6 +187,7 @@
     const audio = document.getElementById("background-audio");
 
     window.onload = () => {
+        stampaTesto();
         if (localStorage.getItem("audioTime") !== null) {
             const savedTime = localStorage.getItem("audioTime");
             localStorage.removeItem("audioTime");

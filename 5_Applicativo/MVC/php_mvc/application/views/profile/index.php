@@ -62,7 +62,7 @@
         }
     </style>
 </head>
-<body onload="showStats()">
+<body>
 <div class="container mt-5 text-center">
     <div class="sett">
         <a href="<?php echo URL?>home/logged" onclick="saveAudioProgress()">
@@ -99,6 +99,7 @@
     const audio = document.getElementById("background-audio");
 
     window.onload = () => {
+        showStats();
         if (localStorage.getItem("audioTime") !== null) {
             const savedTime = localStorage.getItem("audioTime");
             localStorage.removeItem("audioTime");
