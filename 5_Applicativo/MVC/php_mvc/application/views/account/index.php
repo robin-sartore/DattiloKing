@@ -156,13 +156,13 @@
             return false;
         }
 
-        if (!regex.test(password)) {
-            document.getElementById("errors").innerHTML = "La password deve rispettare:\n- Almeno una lettera maiuscola\n- Almeno una lettera minuscola\n- Almeno un numero\n- Almeno un carattere speciale\n- Almeno 8 caratteri di lunghezza";
+        if (password !== passwordConfirm) {
+            document.getElementById("errors").innerHTML = "Le password non coincidono!";
             return false;
         }
 
-        if (password !== passwordConfirm) {
-            document.getElementById("errors").innerHTML = "Le password non coincidono!";
+        if (!regex.test(password)) {
+            document.getElementById("errors").innerHTML = "La password deve rispettare:\n- Almeno una lettera maiuscola\n- Almeno una lettera minuscola\n- Almeno un numero\n- Almeno un carattere speciale\n- Almeno 8 caratteri di lunghezza";
             return false;
         }
 
