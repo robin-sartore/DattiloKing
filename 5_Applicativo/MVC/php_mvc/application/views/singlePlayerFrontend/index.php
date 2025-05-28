@@ -31,7 +31,7 @@
         }
 
         .key.pressed {
-            background-color: #7efc2e; /* Colore quando il tasto è premuto */
+            background-color: #7efc2e;
         }
 
         .mt-5{
@@ -106,22 +106,52 @@
 
 <div class="sidebar">
     <h2>
-        Velocità:
+        <?php
+        if ($_SESSION['lingua'] == 'italiano') {
+            echo "Velocità:";
+        } elseif ($_SESSION['lingua'] == 'inglese') {
+            echo "Speed:";
+        } elseif ($_SESSION['lingua'] == 'spagnolo') {
+            echo "Velocidad:";
+        }
+        ?>
     </h2>
-    <h1 id="velocita">
-        WPM
-    </h1> <br> <br>
+    <h1 id="velocita">WPM</h1> <br> <br>
+
     <h2>
-        Accuratezza:
+        <?php
+        if ($_SESSION['lingua'] == 'italiano') {
+            echo "Accuratezza:";
+        } elseif ($_SESSION['lingua'] == 'inglese') {
+            echo "Accuracy:";
+        } elseif ($_SESSION['lingua'] == 'spagnolo') {
+            echo "Precisión:";
+        }
+        ?>
     </h2>
-    <h1 id="percentualeCorrettezza">
-        %
-    </h1> <br> <br>
+    <h1 id="percentualeCorrettezza">%</h1> <br> <br>
+
     <h2>
-        Tempo:
+        <?php
+        if ($_SESSION['lingua'] == 'italiano') {
+            echo "Tempo:";
+        } elseif ($_SESSION['lingua'] == 'inglese') {
+            echo "Time:";
+        } elseif ($_SESSION['lingua'] == 'spagnolo') {
+            echo "Tiempo:";
+        }
+        ?>
     </h2>
     <h1 id="tempo">
-        sec
+        <?php
+        if ($_SESSION['lingua'] == 'italiano') {
+            echo "sec";
+        } elseif ($_SESSION['lingua'] == 'inglese') {
+            echo "sec";
+        } elseif ($_SESSION['lingua'] == 'spagnolo') {
+            echo "seg";
+        }
+        ?>
     </h1>
 </div>
 
