@@ -9,6 +9,7 @@ class save{
 
     public function saveStats(){
         if(isset($_SESSION['logged']) && $_SESSION['logged']){
+            // salva in $data il contenuto del POST trasformandolo in PHP da formato JSON
             $data = json_decode(file_get_contents('php://input'), true);
 
             if (isset($data['accuratezza']) && isset($data['velocita']) && $data['tempo']) {

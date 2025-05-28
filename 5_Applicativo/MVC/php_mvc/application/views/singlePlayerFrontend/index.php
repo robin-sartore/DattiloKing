@@ -204,7 +204,9 @@
     let primoTastoPremuto = false;
     let tastiPremuti = {};
 
+    // evento che viene attivato quando viene premuto un tasto sulla tastiera
     document.addEventListener('keydown', function(event) {
+        // verifica se il tasto premuto è il primo del round attuale e fa partire il tempo
         if(primoTastoPremuto == false){
             intervalloTempo = setInterval(incrementaTempo, 100);
             primoTastoPremuto = true;
@@ -222,6 +224,7 @@
         if (key === ",") key = "comma";
         if (key === ".") key = "point";
         const button = document.getElementById('key-' + key);
+        // se il bottone esiste colora il corrispettivo sulla tastiera
         if (button) {
             button.classList.add('pressed');
         }
@@ -232,6 +235,7 @@
         }
     });
 
+    // evento che viene attivato quanto viene rilasciati un tasto sulla tastiera
     document.addEventListener('keyup', function(event) {
         let key = event.key.toUpperCase();
         if (key === " ") key = "space";
@@ -252,10 +256,12 @@
     let frase;
     let numeroErrori = 0;
 
+    // funzione che stampa la frase del round che l'utente deve scrivere
     function stampaTesto(lettera){
         fetch('../../php_mvc/application/controller/phrase.php')
             .then(response => response.text())
             .then(data => {
+                // verifica se è la prima volta che viene chiamata la funzione per il rount attuale
                 if(primoAccesso){
                     frase = data;
 
@@ -263,7 +269,9 @@
                     document.getElementById("frase").innerText = data;
                     primoAccesso = false;
                 }else{
+                    // rimuove la sottolineatura del carattere che si è appena andati a scrivere
                     let prossimaLettera = fraseArray[indiceLettera].replace(/\u0332/g, '');
+                    // verifica se il tasto premuto corrisponde a quello giusto da scrivere nella frase
                     if (prossimaLettera === lettera) {
                         if(indiceLettera <= fraseArray.length-2){
                             let letteraDopoProssimaLettera = fraseArray[indiceLettera+1];

@@ -2,7 +2,6 @@
 
 class logout
 {
-
     public function logout()
     {
         session_start();

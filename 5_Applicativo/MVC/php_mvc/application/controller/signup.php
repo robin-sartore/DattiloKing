@@ -18,6 +18,9 @@ class signup{
             $username = $_POST['username'];
             $password = $_POST['password'];
             $passwordConfirm = $_POST['passwordConfirm'];
+
+            // Stringa del regex che servirà a verificare che la stringa sia lunga almeno 8 caratteri,
+            // contenga almeno una lettera minuscola, una maiuscola, una cifra e un carattere speciale
             $regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/";
 
             if(empty($password)) {

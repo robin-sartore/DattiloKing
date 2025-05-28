@@ -46,7 +46,6 @@ class play{
     public function multiPlayerGameRoom() {
         session_start();
 
-        // Assicurati che tutti i dati arrivino correttamente
         if ($_SERVER["REQUEST_METHOD"] == "POST" &&
             isset($_POST["code"]) &&
             isset($_POST["rounds"]) &&
@@ -56,7 +55,6 @@ class play{
             $rounds = intval($_POST["rounds"]);
             $creatore = $_POST["creatore"];
 
-            // Salva nella sessione
             $_SESSION["code"] = $codice;
             $_SESSION["rounds"] = $rounds;
             $_SESSION["creatore"] = true;
@@ -65,20 +63,15 @@ class play{
             require_once 'application/models/RoomMapper.php';
             $roomMapper = new RoomMapper();
 
-            // 1. Crea stanza
             $stanza_id = $roomMapper->creaStanza($codice, $creatore, $rounds);
 
-            // 2. Aggiungi il creatore come partecipante
             $roomMapper->aggiungiPartecipante($codice, $creatore);
 
-            // 3. Salva l'id della stanza nella sessione
             $_SESSION["stanza_id"] = $stanza_id;
 
-            // 4. Vai nella waiting room
             require_once 'application/views/multiPlayer/gameRoom.php';
 
         } else {
-            // Mancano dei dati
             header("Location: " . URL . "play/multiPlayerCreateRoom?error=missing_fields");
             exit;
         }
